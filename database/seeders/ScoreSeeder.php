@@ -15,12 +15,5 @@ class ScoreSeeder extends Seeder
     public function run()
     {
         $arr =[];
-        for($i = 1001; $i <= 1500; $i++){
-            $arr[] = [
-                'student_id' => $i,
-            ];
-
-        }
-        Score::insert($arr);
     }
 }

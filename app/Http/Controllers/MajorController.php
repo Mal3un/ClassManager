@@ -2,20 +2,48 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Course;
 use App\Models\Major;
 use App\Http\Requests\StoreMajorRequest;
 use App\Http\Requests\UpdateMajorRequest;
+use App\Models\Subject;
+use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+
 
 class MajorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    use ResponseTrait;
+    private object $model;
+    private string $table;
+
+    public function __construct()
     {
-        //
+        $this->model = Major::query();
+        $this->table = (new Major())->getTable();
+
+        View::share('title', ucwords($this->table));
+        View::share('table', $this->table);
+    }
+    public function index(Request $request)
+    {
+        $selectedMajor = $request->get('majorName');
+        $majorNames = $this->model->pluck('name', 'id');
+        $query = $this->model->clone();
+        if($selectedMajor !== 'All...' && $selectedMajor !== null){
+            ($query->where('name', $selectedMajor));
+        }
+        $subject = Subject::query()->get();
+        $data = $query->paginate();
+        return view('manager.majors.index',[
+            'data' => $data,
+            'subjects'=>$subject,
+            'selectedMajor'=> $selectedMajor,
+            'majorNames'=>$majorNames
+        ]);
     }
 
     /**
@@ -28,15 +56,16 @@ class MajorController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreMajorRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreMajorRequest $request)
+
+    public function store(StoreMajorRequest $request):JsonResponse
     {
-        //
+        try{
+            $arr = $request->validated();
+            Major::create($arr);
+            return $this->successResponse("thành công");
+        }catch(exception $e){
+            return $this->errorResponse("thất bại",$e);
+        }
     }
 
     /**

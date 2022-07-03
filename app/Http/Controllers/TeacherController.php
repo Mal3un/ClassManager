@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
+use Illuminate\Support\Facades\View;
 
 class TeacherController extends Controller
 {
@@ -13,11 +15,23 @@ class TeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    private object $model;
+    private string $table;
+
+    public function __construct()
+    {
+        $this->model = Student::query();
+        $this->table = (new Student())->getTable();
+
+        View::share('title', ucwords($this->table));
+        View::share('table', $this->table);
+    }
     public function index()
     {
-        //
+        return view('layout.master');
     }
-
     /**
      * Show the form for creating a new resource.
      *

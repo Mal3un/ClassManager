@@ -1,16 +1,6 @@
 <!-- Topbar Start -->
 <div class="navbar-custom">
     <ul class="list-unstyled topbar-right-menu float-right mb-0">
-        <li class="dropdown notification-list d-lg-none">
-            <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <i class="dripicons-search noti-icon"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
-                <form class="p-3">
-                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                </form>
-            </div>
-        </li>
         <li class="dropdown notification-list topbar-dropdown">
             <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="assets/images/flags/us.jpg" alt="user-image" class="mr-0 mr-sm-1" height="12">

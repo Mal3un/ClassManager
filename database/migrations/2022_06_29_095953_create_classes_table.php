@@ -16,9 +16,11 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->smallInteger('class_mode')->default(1);
             $table->smallInteger('class_type')->default(1);
-            $table->date('time')->nullable();
-            $table->foreignId('teacher_id')->constrained();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->foreignId('teacher_id')->nullable()->constrained();
             $table->foreignId('major_id')->constrained();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('subject_id')->constrained();

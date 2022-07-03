@@ -2,20 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
-use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Course;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    use ResponseTrait;
+    private object $model;
+    private string $table;
+
+    public function __construct()
     {
-        //
+        $this->model = Course::query();
+    }
+
+    public function index(request $request): JsonResponse
+    {
+
+    }
+
+    public function info($course): JsonResponse
+    {
+        $data = $this->model->findOrFail($course);
+        $data['name'] = substr($data['name'],1);
+        return $this->successResponse($data);
     }
 
     /**
@@ -23,9 +36,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(request $request): JsonResponse
     {
-        //
+
     }
 
     /**
@@ -36,7 +49,10 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        dd($request);
+        $arr = $request->validated();
+        Course::create($arr);
+        return $this->successResponse("thành công");
     }
 
     /**
@@ -83,4 +99,5 @@ class CourseController extends Controller
     {
         //
     }
+
 }

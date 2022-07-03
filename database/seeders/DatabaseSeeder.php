@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
 //        Teacher::factory(10)->create();
         $this->call(StudentSeeder::class);
         $this->call(TeacherSeeder::class);
-        $this->call(ClasseSeeder::class);
-        $this->call(ScoreSeeder::class);
-
+//        $this->call(ClasseSeeder::class);
     }
 }

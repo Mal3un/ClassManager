@@ -25,6 +25,7 @@ class CreateStudentsTable extends Migration
             $table->foreignId('major_id')->constrained();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('role_id')->constrained();
+            $table->foreignId('classe_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

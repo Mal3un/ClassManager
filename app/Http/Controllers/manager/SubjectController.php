@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\manager;
 
 use App\Models\Subject;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
-use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
@@ -19,11 +18,11 @@ class SubjectController extends Controller
         //
     }
 
-
-    public function getSubjectByMajor(){
-        $subjects = Subject::query()->where('major_id', request('major_id'))->get();
-        return response()->json($subjects);
-    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         //

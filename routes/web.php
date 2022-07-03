@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
     Route::get('/', function () {
-        return view('layout.master', ['title' => 'Phenikaa']);
+        return view('layout.master');
     })->name('welcome');

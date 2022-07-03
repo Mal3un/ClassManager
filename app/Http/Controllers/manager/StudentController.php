@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subject;
-use App\Http\Requests\StoreSubjectRequest;
-use App\Http\Requests\UpdateSubjectRequest;
-use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 
-class SubjectController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +18,11 @@ class SubjectController extends Controller
         //
     }
 
-
-    public function getSubjectByMajor(){
-        $subjects = Subject::query()->where('major_id', request('major_id'))->get();
-        return response()->json($subjects);
-    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         //
@@ -32,10 +31,10 @@ class SubjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSubjectRequest  $request
+     * @param  \App\Http\Requests\StoreStudentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubjectRequest $request)
+    public function store(StoreStudentRequest $request)
     {
         //
     }
@@ -43,10 +42,10 @@ class SubjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Subject $subject)
+    public function show(Student $student)
     {
         //
     }
@@ -54,10 +53,10 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit(Student $student)
     {
         //
     }
@@ -65,11 +64,11 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSubjectRequest  $request
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Http\Requests\UpdateStudentRequest  $request
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubjectRequest $request, Subject $subject)
+    public function update(UpdateStudentRequest $request, Student $student)
     {
         //
     }
@@ -77,10 +76,10 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Student $student)
     {
         //
     }
