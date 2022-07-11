@@ -41,8 +41,6 @@ class ClasseController extends Controller
         $selectedClassType = $request->get('classType');
         $selectedTeacher = $request->get('teacher');
         $selectedSubject = $request->get('subject');
-
-
         $query = $this->model->clone()
             ->with(['major:id,name', 'teacher:id,first_name,last_name,gender,email', 'course:id,name','subject:id,name' ])
             ->latest();
@@ -50,16 +48,15 @@ class ClasseController extends Controller
         if($selectedClassType !== 'All...' && !empty($selectedClassType)){
             $query->where('class_type',  $selectedClassType);
         }
+        if($selectedSubject !== 'All...' && !empty($selectedSubject)){
+            $query->where('subject_id',  $selectedSubject);
+        }
         if($selectedCourse !== 'All...' && !empty($selectedCourse)){
             $query->whereHas('course',  function($q) use ($selectedCourse){
                 return $q->where('course_id',$selectedCourse);
             });
         }
-        if($selectedSubject !== 'All...' && !empty($selectedSubject)){
-            $query->whereHas('subject',  function($q) use ($selectedSubject){
-                return $q->where('subject_id',$selectedSubject);
-            });
-        }
+
         if($selectedMajor !== 'All...' && !empty($selectedMajor)){
             $query->whereHas('major',  function($q) use ($selectedMajor){
                 return $q->where('major_id',$selectedMajor);
@@ -111,7 +108,10 @@ class ClasseController extends Controller
             'selectedSubject'=> $selectedSubject,
             ]);
     }
-
+    function myclass(){
+        dd(auth()->id());
+        return view('manager.classes.myclass');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -137,6 +137,7 @@ class ClasseController extends Controller
                         'subject_id',
                         'start_date',
                         'end_date',
+                        'all_session'
                     ]);
                     $data['name'] =  $name;
                     Classe::create($data);

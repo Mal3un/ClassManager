@@ -341,6 +341,10 @@
                                 <label for="modal-end_date">Thời gian kết thúc</label>
                                 <input  class="form-control " type="date" id="modal-end_date"   name="end_date">
                             </div>
+                            <div class="col-md-2 ">
+                                <label for="modal-quality-all_session">Số buổi học </label>
+                                <input  class="form-control " id="modal-quality-all_session" value="1" type="number"  name="all_session">
+                            </div>
                         </div>
                         <div class="form-group d-flex mb-3">
                             <div class="col-md-6 ">

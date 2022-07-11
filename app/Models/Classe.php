@@ -21,6 +21,7 @@ class Classe extends Model
         'subject_id',
         'created_by',
         'updated_by',
+        'all_session',
     ];
     public function course(): BelongsTo
     {

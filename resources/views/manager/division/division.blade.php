@@ -211,9 +211,7 @@
             });
             function hidemodel(idName){
                 $('#'+ idName).hide();
-                window.setTimeout(function(){
-                    window.location.href = "{{route("manager.division.index2")}}";
-                });
+                loadInfo2();
             }
             function loadInfo(){
                 $.ajax({

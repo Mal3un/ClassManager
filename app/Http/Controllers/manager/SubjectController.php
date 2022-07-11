@@ -2,20 +2,62 @@
 
 namespace App\Http\Controllers\manager;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseTrait;
+use App\Models\Major;
 use App\Models\Subject;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    use ResponseTrait;
+
+    private object $model;
+    private string $table;
+    public function __construct()
     {
-        //
+        $this->model = Subject::query();
+        $this->table = (new Subject())->getTable();
+
+        View::share('title', ucwords($this->table));
+        View::share('table', $this->table);
+    }
+
+    public function index(Request $request)
+    {
+        $selectedMajor = $request['major'];
+        $selectedSubject = $request['subject'];
+        $query = $this->model->clone()
+            ->with(['major:id,name'])
+            ->latest();
+        if($selectedSubject !== 'All...' && !empty($selectedSubject)){
+            $query->where('id',  $selectedSubject);
+        }
+        if($selectedMajor !== 'All...' && !empty($selectedMajor)){
+            $query->whereHas('major',  function($q) use ($selectedMajor){
+                return $q->where('major_id',$selectedMajor);
+            });
+        }
+        $data = $query->paginate();
+        $major = Major::all();
+        $subject = Subject::all();
+        if(($selectedMajor !== 'All...' && !empty($selectedMajor))) {
+            $subject = Subject::query()->where('major_id', $selectedMajor)->get();
+        }
+        return (view('manager.subjects.index', [
+            'title' => $this->table,
+            'data' => $data,
+            'subjects' => $subject,
+            'majors' => $major,
+
+            'selectedSubject' => $selectedSubject,
+            'selectedMajor' => $selectedMajor,
+        ]));
     }
 
     /**

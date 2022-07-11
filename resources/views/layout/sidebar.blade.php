@@ -30,13 +30,13 @@
 
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="uil-users-alt"></i>
+                    <i class="mdi mdi-human-male-female"></i>
                     <span> Sinh viên </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
                     <li>
-                        <a href="apps-ecommerce-products.html">Thông tin sinh viên</a>
+                        <a href="{{route('manager.students.index')}}">Thông tin sinh viên</a>
                     </li>
                     <li>
                         <a href="apps-ecommerce-products-details.html">Thêm sinh viên</a>
@@ -47,16 +47,15 @@
                 </ul>
             </li>
             <li class="side-nav-item">
-                <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="uil-users-alt"></i>
+                <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
+                    <i class="mdi mdi-book-open-page-variant"></i>
                     <span> Môn học </span>
-                    <span class="menu-arrow"></span>
                 </a>
             </li>
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class="uil-users-alt"></i>
-                    <span> Sinh viên </span>
+                    <span> Giáo viên </span>
                     <span class="menu-arrow"></span>
                 </a>
             </li>
@@ -70,9 +69,11 @@
                     <li>
                         <a href="{{route('manager.division.index')}}">Danh sách phần công</a>
                     </li>
-                    <li>
-                        <a href="{{route('manager.division.index2')}}">Phân công giảng dạy</a>
-                    </li>
+{{--                    @if(auth()->role() === 3)--}}
+                        <li>
+                            <a href="{{route('manager.division.index2')}}">Phân công giảng dạy</a>
+                        </li>
+{{--                    @endif--}}
                 </ul>
             </li>
             <li class="side-nav-item">
@@ -89,7 +90,7 @@
                         <a href="apps-ecommerce-products-details.html">Lớp học cải thiện</a>
                     </li>
                     <li>
-                        <a href="apps-ecommerce-orders.html">Khác</a>
+                        <a href="{{route('manager.classes.myclass')}}">Lớp học của tôi</a>
                     </li>
                 </ul>
             </li>

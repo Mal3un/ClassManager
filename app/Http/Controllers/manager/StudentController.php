@@ -1,21 +1,75 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\manager;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseTrait;
+use App\Models\Course;
+use App\Models\Major;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    use ResponseTrait;
+
+    private object $model;
+    private string $table;
+    public function __construct()
     {
-        //
+        $this->model = Student::query();
+        $this->table = (new Student())->getTable();
+
+        View::share('title', ucwords($this->table));
+        View::share('table', $this->table);
+    }
+    public function index(Request $request)
+    {
+        $selectedCourse = $request['course'];
+        $selectedMajor = $request['major'];
+        $selectedStudent = $request['student'];
+        $arrNameStudent = explode(" ",$selectedStudent);
+        $query = $this->model->clone()
+            ->with(['major:id,name','course:id,name', ])
+            ->latest();
+        if($selectedCourse !== 'All...' && !empty($selectedCourse)){
+            $query->whereHas('course',  function($q) use ($selectedCourse){
+                return $q->where('course_id',$selectedCourse);
+            });
+        }
+        if($selectedMajor !== 'All...' && !empty($selectedMajor)){
+            $query->whereHas('course',  function($q) use ($selectedMajor){
+                return $q->where('major_id',$selectedMajor);
+            });
+        }
+        if($selectedStudent !== 'All...' && !empty($selectedStudent)){
+            $query->where('first_name',  $arrNameStudent[0])->where('last_name', $arrNameStudent[1]);
+        }
+        $data = $query->paginate();
+        $student = Student::all();
+        $course = Course::all();
+        $major = Major::all();
+        if(($selectedMajor !== 'All...' && !empty($selectedMajor)) && ($selectedCourse !== 'All...' && !empty($selectedCourse))){
+            $student = Student::query()->where('course_id', $selectedCourse)->where('major_id', $selectedMajor)->get();
+        }else if($selectedMajor !== 'All...' && !empty($selectedMajor) && ($selectedCourse === 'All...' && empty($selectedCourse))){
+            $student = Student::query()->where('course_id', $selectedCourse)->get();
+        }else if($selectedMajor === 'All...' && empty($selectedMajor) && ($selectedCourse !== 'All...' && !empty($selectedCourse))){
+            $student = Student::query()->where('major_id', $selectedMajor)->get();
+        }
+        return (view('manager.students.index', [
+            'title' => 'Students',
+            'data' => $data,
+            'students' => $student,
+            'courses' => $course,
+            'majors' => $major,
+
+            'selectedStudent' => $selectedStudent,
+            'selectedCourse' => $selectedCourse,
+            'selectedMajor' => $selectedMajor,
+        ]));
     }
 
     /**

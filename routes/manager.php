@@ -4,6 +4,8 @@
     use App\Http\Controllers\MajorController;
     use App\Http\Controllers\manager\CourseController;
     use App\Http\Controllers\manager\DivisionController;
+    use App\Http\Controllers\manager\StudentController;
+    use App\Http\Controllers\manager\SubjectController;
     use App\Http\Controllers\TeacherController;
     use App\Models\Course;
     use App\Models\Major;
@@ -51,9 +53,11 @@
         'prefix' => 'classes',
     ], static function () {
         Route::get('/', [ClasseController::class, 'index'])->name('index');
+        Route::get('/myclass', [ClasseController::class, 'myclass'])->name('myclass');
 //        Route::get('/create', [CourseController::class, 'create'])->name('create');
         Route::post('/store', [ClasseController::class, 'store'])->name('store');
 //        Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');
+
     });
     Route::group([
         'as'     => 'division.',
@@ -64,4 +68,18 @@
 //        Route::get('/create', [CourseController::class, 'create'])->name('create');
         Route::post('/store', [DivisionController::class, 'store'])->name('store');
 //        Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');
+    });
+    Route::group([
+        'as'     => 'students.',
+        'prefix' => 'students',
+    ], static function () {
+        Route::get('/', [StudentController::class, 'index'])->name('index');
+
+    });
+    Route::group([
+        'as'     => 'subjects.',
+        'prefix' => 'subjects',
+    ], static function () {
+        Route::get('/', [SubjectController::class, 'index'])->name('index');
+
     });
