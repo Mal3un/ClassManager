@@ -27,14 +27,13 @@ class StudentSeeder extends Seeder
                 'last_name' => $faker->lastName,
                 'birthdate' => $faker->date($format = 'Y-m-d', $max = '2004-01-01'),
                 'address' => $faker->address. ' - ' . $faker->city,
-                'email' => $faker->freeEmail,
+                'email' => (1000100 + $i) . "@st.phenikaa-uni.edu.vn",
                 'password' => $faker->password,
                 'gender' =>  $faker->randomElement([1,2,3]),
                 'role_id' => 1,
                 'course_id' => $course[array_rand($course)],
                 'major_id' => $major[array_rand($major)],
             ];
-
         }
         Student::insert($arr);
 
