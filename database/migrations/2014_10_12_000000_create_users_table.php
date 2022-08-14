@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateListPointsTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateListPointsTable extends Migration
      */
     public function up()
     {
-        Schema::create('list_points', function (Blueprint $table) {
-            $table->foreignId('classe_id')->constrained();
-            $table->foreignId('students_id')->constrained();
-            $table->smallInteger('status')->default(1);
-            $table->text('note')->nullable();
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateListPointsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_points');
+        Schema::dropIfExists('users');
     }
 }

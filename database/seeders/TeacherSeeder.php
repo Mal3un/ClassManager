@@ -25,7 +25,7 @@ class TeacherSeeder extends Seeder
                 'last_name' => $faker->lastName,
                 'birthdate' => $faker->date($format = 'Y-m-d', $max = '2000-01-01'),
                 'address' => $faker->address. ' - ' . $faker->city,
-                'email' => $faker->freeEmail,
+                'email' => 100+$i . "@tc.phenikaa-uni.edu.vn",
                 'password' => $faker->password,
                 'gender' =>  $faker->randomElement([1,2,3]),
                 'role_id' => 2,

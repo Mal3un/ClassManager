@@ -11,7 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class ClassTypeEnum extends Enum
 {
-    public const LT =   1;
-    public const TH =   2;
-    public const LT_TH = 3;
+    public const LT =   0;
+    public const TH =   1;
+    public const LT_TH = 2;
 }
