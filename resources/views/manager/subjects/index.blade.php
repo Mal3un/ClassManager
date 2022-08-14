@@ -109,7 +109,10 @@
 
             $('#modal-major').select2();
             $('#modal-subject-type').select2();
+<<<<<<< HEAD
             // $('#number_credits').select2();
+=======
+>>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
             $(document).ready(async function() {
                 $('.select-filter-subject,.select-filter-major').change(function(){
                     $('#form-filter').submit();
@@ -167,9 +170,12 @@
                     }
                 });
             }
+<<<<<<< HEAD
             function hidemodel(idName){
                 $('#'+ idName).hide();
             }
+=======
+>>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
         </script>
     @endpush
     <div id="modal-create-classe" class="modal" tabindex="-1" role="dialog" style="background-color:rgba(0,0,0,0.5)">
@@ -182,9 +188,21 @@
                     </button>
                 </div>
                 <div class="modal-body ">
+<<<<<<< HEAD
                     <form id="form-create-classe" action='{{route("manager.$table.store")}}' class="d-flex flex-column " method="POST">
                         @csrf
                         <div class="form-group d-flex mb-3">
+=======
+                    <form id="form-create-classe" action='' class="d-flex flex-column " method="POST">
+                        @csrf
+                        <div class="form-group d-flex mb-3">
+                            <div class="col-md-6 ">
+                                <label for="modal-name-subject">Tên môn học </label>
+                                <input  class="form-control " id="modal-name-subject"  type="text"  name="name-subject">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex mb-3">
+>>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
                             <div class="col-md-4 ">
                                 <label for="modal-major">Ngành</label>
                                 <select class="custom-select " id="modal-major"  name="major_id" >
@@ -197,16 +215,32 @@
                             </div>
                             <div class="col-md-4 ">
                                 <label for="modal-subject-type">Loại môn học</label>
+<<<<<<< HEAD
                                 <select class="custom-select " id="modal-subject-type"  name="study_type" >
                                     @foreach($subject_types as $subject_type => $value)
                                         <option value="{{ $subject_type }}">
                                             {{$value}}
                                         </option>
                                     @endforeach
+=======
+                                <select class="custom-select " id="modal-subject-type"  name="subject_type" >
+
+                                </select>
+                            </div>
+                            <div class="col-md-2 ">
+                                <label for="modal-class-type">Loại lớp học</label>
+                                <select class="custom-select " id="modal-class-type"  name="class_type" >
+{{--                                    @foreach($class_types as $class_type => $value)--}}
+{{--                                        <option value="{{ $value }}">--}}
+{{--                                            {{$class_type}}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+>>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
                                 </select>
                             </div>
                         </div>
                         <div class="form-group d-flex mb-3">
+<<<<<<< HEAD
                             <div class="col-md-6 ">
                                 <label for="modal-name-subject">Tên môn học </label>
                                 <input  class="form-control " id="modal-name-subject"  type="text"  name="name">
@@ -214,6 +248,29 @@
                             <div class="col-md-2 ">
                                 <label for="number_credits">Số tín </label>
                                 <input  class="form-control " id="number_credits"  type="number"  name="number_credits">
+=======
+                            <div class="col-md-3 ">
+                                <label for="modal-start_date">Thời gian bắt đầu </label>
+                                <input  class="form-control " type="date" id="modal-start_date"  name="start_date">
+                            </div>
+                            <div class="col-md-3 ">
+                                <label for="modal-end_date">Thời gian kết thúc</label>
+                                <input  class="form-control " type="date" id="modal-end_date"   name="end_date">
+                            </div>
+                            <div class="col-md-2 ">
+                                <label for="modal-quality-all_session">Số buổi học </label>
+                                <input  class="form-control " id="modal-quality-all_session" value="1" type="number"  name="all_session">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex mb-3">
+                            <div class="col-md-6 ">
+                                <label for="modal-classname">Tên lớp </label>
+                                <input  class="form-control " id="modal-classname"  name="name">
+                            </div>
+                            <div class="col-md-2 ">
+                                <label for="modal-exam-classname">###</label>
+                                <input  class="form-control " id="modal-exam-classname" readonly  name="exam-classname">
+>>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
                             </div>
                         </div>
                     </form>

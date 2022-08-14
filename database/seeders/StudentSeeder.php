@@ -27,7 +27,11 @@ class StudentSeeder extends Seeder
                 'last_name' => $faker->lastName,
                 'birthdate' => $faker->date($format = 'Y-m-d', $max = '2004-01-01'),
                 'address' => $faker->address. ' - ' . $faker->city,
+<<<<<<< HEAD
                 'email' => (100100 + $i) . "@st.phenikaa-uni.edu.vn",
+=======
+                'email' => (1000100 + $i) . "@st.phenikaa-uni.edu.vn",
+>>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
                 'password' => $faker->password,
                 'gender' =>  $faker->randomElement([1,2,3]),
                 'role_id' => 1,
