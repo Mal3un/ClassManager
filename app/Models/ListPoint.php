@@ -8,11 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class ListPoint extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'classe_id',
-        'students_id',
-        'session',
-        'status',
-        'note'
-    ];
 }

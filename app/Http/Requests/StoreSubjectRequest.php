@@ -13,7 +13,7 @@ class StoreSubjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,10 +24,7 @@ class StoreSubjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'major_id' => 'required|integer',
-            'number_credits' => 'required|integer',
-            'study_type' => 'required',
+            //
         ];
     }
 }

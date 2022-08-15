@@ -26,10 +26,14 @@ class TeacherSeeder extends Seeder
                 'birthdate' => $faker->date($format = 'Y-m-d', $max = '2000-01-01'),
                 'address' => $faker->address. ' - ' . $faker->city,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'email' => 100+$i . "@tc.phenikaa-uni.edu.vn",
 =======
                 'email' => $faker->firstName . ' ' . $faker->lastName . "@tc.phenikaa-uni.edu.vn",
 >>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
+=======
+                'email' => $faker->freeEmail,
+>>>>>>> parent of c326177 (upload-14/08/2022-diemdanh,dangkylop)
                 'password' => $faker->password,
                 'gender' =>  $faker->randomElement([1,2,3]),
                 'role_id' => 2,

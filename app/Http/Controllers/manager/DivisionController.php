@@ -46,6 +46,7 @@
                 'title' => 'Division',
                 'teachers' => $teacher,
                 'classes' => $classes,
+
             ]));
         }
         public function info(Request $request): JsonResponse
@@ -72,20 +73,12 @@
 
         public function set(Request $request)
         {
-
             $request['class_id'] = substr($request->get('class_id'), 0, -1);
             $arr = explode(",",$request['class_id']);
             try{
                 foreach($arr as $class_id){
                     $class = Classe::find($class_id);
                     $class->teacher_id = $request['teacher_id'];
-                    $list_point = ListPoint::query()->where('classe_id', '=', $class_id)->get();
-                    if(!$list_point->isEmpty()){
-                        foreach($list_point as $point){
-                            $point->teacher_id = $request['teacher_id'];
-                            $point->save();
-                        }
-                    }
                     $class->save();
                 }
                 return $this->successResponse();
