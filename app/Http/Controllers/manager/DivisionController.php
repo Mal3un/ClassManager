@@ -80,13 +80,13 @@
                 foreach($arr as $class_id){
                     $class = Classe::find($class_id);
                     $class->teacher_id = $request['teacher_id'];
-                    $list_point = ListPoint::query()->where('classe_id', '=', $class_id)->get();
-                    if(!$list_point->isEmpty()){
-                        foreach($list_point as $point){
-                            $point->teacher_id = $request['teacher_id'];
-                            $point->save();
-                        }
-                    }
+//                    $list_point = ListPoint::query()->where('classe_id', '=', $class_id)->get();
+//                    if(!$list_point->isEmpty()){
+//                        foreach($list_point as $point){
+//                            $point->teacher_id = $request['teacher_id'];
+//                            $point->save();
+//                        }
+//                    }
                     $class->save();
                 }
                 return $this->successResponse();

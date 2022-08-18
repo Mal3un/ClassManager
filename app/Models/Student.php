@@ -32,6 +32,8 @@ class Student extends Model
         return $this->belongsTo(Major::class);
     }
 
+
+
     public function getCourseNameAttribute()
     {
         return Course::find($this->course_id)->name;

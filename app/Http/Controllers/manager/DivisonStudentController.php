@@ -34,19 +34,24 @@ class DivisonStudentController extends Controller
 
     public function index(Request $request)
     {
-        $classes = Classe::all();
         $classInfo = Classe::find($request->classes);
+
+        $classes = Classe::all();
+        $student = Student::all();
+        $course = Course::all();
+        $major = Major::all();
+
+
         if($classInfo){
             $teacher = Teacher::find($classInfo['teacher_id']);
         }else{
             $teacher = '';
         }
+
         $selectedCourse = $request['course'];
         $selectedClass = $request['classes'];
         $selectedMajor = $request['major'];
         $selectedStudent = $request['student'];
-
-
         $arrNameStudent = explode(" ",$selectedStudent);
         $query = $this->model->clone()
             ->with(['major:id,name','course:id,name', ])
@@ -64,16 +69,18 @@ class DivisonStudentController extends Controller
         if($selectedStudent !== 'All...' && !empty($selectedStudent)){
             $query->where('first_name',  $arrNameStudent[0])->where('last_name', $arrNameStudent[1]);
         }
+        if($selectedClass !== null && $selectedClass !== 'chọn lớp học'){
+            $studentlist = ListPoint::query()->where('classe_id', $selectedClass)->where('session',1)->pluck('students_id');
+            $student = Student::query()->whereNotIn('id',$studentlist)->get();
+            $query->whereNotIn('id',$studentlist);
+        }
         $data = $query->paginate(30);
-        $student = Student::all();
-        $course = Course::all();
-        $major = Major::all();
         if(($selectedMajor !== 'All...' && !empty($selectedMajor)) && ($selectedCourse !== 'All...' && !empty($selectedCourse))){
-            $student = Student::query()->where('course_id', $selectedCourse)->where('major_id', $selectedMajor)->get();
+            $student = $student->where('course_id', $selectedCourse)->where('major_id', $selectedMajor);
         }else if($selectedMajor !== 'All...' && !empty($selectedMajor) && ($selectedCourse === 'All...' && empty($selectedCourse))){
-            $student = Student::query()->where('course_id', $selectedCourse)->get();
+            $student = $student->where('course_id', $selectedCourse);
         }else if($selectedMajor === 'All...' && empty($selectedMajor) && ($selectedCourse !== 'All...' && !empty($selectedCourse))){
-            $student = Student::query()->where('major_id', $selectedMajor)->get();
+            $student = $student->where('major_id', $selectedMajor);
         }
         return (view('manager.divisionstudent.index', [
             'title' => 'Students',

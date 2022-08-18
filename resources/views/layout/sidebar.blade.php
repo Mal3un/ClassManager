@@ -94,9 +94,6 @@
                     <li>
                         <a href="apps-ecommerce-products-details.html">Điểm danh lớp học</a>
                     </li>
-                    <li>
-                        <a href="">Lớp học của tôi</a>
-                    </li>
                 </ul>
             </li>
             <li class="side-nav-item">
