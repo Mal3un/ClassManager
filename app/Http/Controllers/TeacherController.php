@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Course;
+use App\Models\Major;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
 class TeacherController extends Controller
@@ -22,15 +27,29 @@ class TeacherController extends Controller
 
     public function __construct()
     {
-        $this->model = Student::query();
-        $this->table = (new Student())->getTable();
+        $this->model = Teacher::query();
+        $this->table = (new Teacher())->getTable();
 
         View::share('title', ucwords($this->table));
         View::share('table', $this->table);
     }
-    public function index()
+    public function index(Request $request)
     {
-        return view('layout.master');
+        $selectedTeacher = $request['teachers'];
+        $arrNameTeacher = explode(" ",$selectedTeacher);
+        $query = $this->model->clone()->latest();
+        if($selectedTeacher !== 'All...' && !empty($selectedTeacher)){
+            $query->where('first_name',  $arrNameTeacher[0])->where('last_name', $arrNameTeacher[1]);
+        }
+        $data = $query->paginate();
+        $teacher = Teacher::all();
+        return (view('manager.teachers.index', [
+            'title' => 'Teacher',
+            'data' => $data,
+            'teachers' => $teacher,
+
+            'selectedTeacher' => $selectedTeacher,
+        ]));
     }
     /**
      * Show the form for creating a new resource.

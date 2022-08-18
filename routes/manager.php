@@ -4,6 +4,7 @@
     use App\Http\Controllers\MajorController;
     use App\Http\Controllers\manager\CourseController;
     use App\Http\Controllers\manager\DivisionController;
+    use App\Http\Controllers\manager\DivisonStudentController;
     use App\Http\Controllers\manager\StudentController;
     use App\Http\Controllers\manager\SubjectController;
     use App\Http\Controllers\TeacherController;
@@ -53,9 +54,10 @@
         'prefix' => 'classes',
     ], static function () {
         Route::get('/', [ClasseController::class, 'index'])->name('index');
-        Route::get('/myclass', [ClasseController::class, 'myclass'])->name('myclass');
 //        Route::get('/create', [CourseController::class, 'create'])->name('create');
         Route::post('/store', [ClasseController::class, 'store'])->name('store');
+        Route::post('point_list/{id}', [ClasseController::class, 'point_list'])->name('point_list');
+        Route::post('/{classId}', [ClasseController::class, 'show'])->name('show');
 //        Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');
 
     });
@@ -69,17 +71,33 @@
         Route::post('/store', [DivisionController::class, 'store'])->name('store');
 //        Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');
     });
+
+    Route::group([
+        'as'     => 'divisionstudent.',
+        'prefix' => 'divisionstudent',
+    ], static function () {
+        Route::get('/', [DivisonStudentController::class, 'index'])->name('index');
+
+    });
+
     Route::group([
         'as'     => 'students.',
         'prefix' => 'students',
     ], static function () {
         Route::get('/', [StudentController::class, 'index'])->name('index');
-
+    });
+    Route::group([
+        'as'     => 'teachers.',
+        'prefix' => 'teachers',
+    ], static function () {
+        Route::get('/', [TeacherController::class, 'index'])->name('index');
     });
     Route::group([
         'as'     => 'subjects.',
         'prefix' => 'subjects',
     ], static function () {
         Route::get('/', [SubjectController::class, 'index'])->name('index');
+
+        Route::post('/store', [SubjectController::class, 'store'])->name('store');
 
     });

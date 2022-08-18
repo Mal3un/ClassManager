@@ -8,23 +8,16 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4",
+        "php": "^7.3",
         "bensampo/laravel-enum": "^4.2",
+        "doctrine/dbal": "^3.4",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
-<<<<<<< HEAD
         "laravel/tinker": "^2.0",
-<<<<<<< HEAD
         "ext-mysql_xdevapi": "*"
-=======
-        "laravel/tinker": "^2.0"
->>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
-=======
-      "ext-couchbase": "*"
->>>>>>> parent of c326177 (upload-14/08/2022-diemdanh,dangkylop)
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
