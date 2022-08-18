@@ -86,7 +86,6 @@
                             <th>Loại lớp</th>
                             <th>Thời gian</th>
                             <th>Tên giáo viên</th>
-                            <th style="width:10%">Xem</th>
                             <th style="width:10%">Sửa</th>
                             <th style="width:10%">Xóa</th>
                         </tr>
@@ -134,14 +133,6 @@
                                             </a>
                                         @endif
                                     @endforeach
-                                </td>
-                                <td>
-                                    <form method="post" action='{{route('manager.classes.show',$each->id)}}'>
-                                        @csrf
-                                        <button type="submit" name="info" class="btn btn-info">
-                                            Điểm danh
-                                        </button>
-                                    </form>
                                 </td>
                                 <td>
                                     <a href='' id="btn-edit-course" class="btn btn-primary">

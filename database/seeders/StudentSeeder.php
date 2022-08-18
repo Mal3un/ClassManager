@@ -34,6 +34,7 @@ class StudentSeeder extends Seeder
                 'course_id' => $course[array_rand($course)],
                 'major_id' => $major[array_rand($major)],
             ];
+
         }
         Student::insert($arr);
 

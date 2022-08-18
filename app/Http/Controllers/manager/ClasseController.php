@@ -9,16 +9,12 @@ use App\Models\Classe;
 use App\Http\Requests\StoreClasseRequest;
 use App\Http\Requests\UpdateClasseRequest;
 use App\Models\Course;
-use App\Models\ListPoint;
 use App\Models\Major;
-use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use mysql_xdevapi\Exception;
-use PDOException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Throwable;
 
@@ -112,58 +108,9 @@ class ClasseController extends Controller
             'selectedSubject'=> $selectedSubject,
             ]);
     }
-    public function point_list(Request $request):JsonResponse
-    {
-        try{
-            $studentIds = listPoint::query()
-                ->where('session',$request->get('lesson'))
-                ->where('classe_id',$request->get('class_id'))->get(['students_id','status','note'])->toArray();
-            $students = [];
-            foreach($studentIds as $student){
-                $student['info'] = Student::find($student['students_id'])->toArray();
-                $students[] = $student;
-            }
-            return $this->successResponse($students);
-        }
-        catch (Throwable $e){
-            return $this->errorResponse($e->getMessage(),500);
-        }
-    }
-
-    public function setPointList(Request $request) : JsonResponse
-    {
-        try{
-            $class = $request->get('classid');
-            $lesson = $request->get('lesson');
-            $a =ListPoint::query()
-                ->where('classe_id',$class)
-                ->where('session',$lesson)->first();
-            $arr = explode("&", $request->get('status'));
-            foreach ($arr as $key=>$each){
-                $each = str_replace('id','',$each);
-                $set = explode('=',$each);
-                if($key === 0){
-                    $note = $request->get('note');
-                    ListPoint::query()
-                        ->where('students_id',$set[0])
-                        ->where('session',$lesson)
-                        ->where('classe_id',$class)
-                        ->update([
-                            'note'=>$note,
-                        ]);
-                }
-                ListPoint::query()
-                    ->where('students_id',$set[0])
-                    ->where('session',$lesson)
-                    ->where('classe_id',$class)
-                    ->update([
-                        'status'=>$set[1],
-                    ]);
-            }
-            return $this->successResponse();
-        }catch(Exception $e){
-            return $this->errorResponse($e->getMessage(),500);
-        }
+    function myclass(){
+        dd(auth()->id());
+        return view('manager.classes.myclass');
     }
     /**
      * Show the form for creating a new resource.
@@ -194,9 +141,6 @@ class ClasseController extends Controller
                     ]);
                     $data['name'] =  $name;
                     Classe::create($data);
-//                    for($j = 1; $j <= (int)$request['all_session']; $j++){
-//                        listPoint::create(['classe_id' => $class->id, 'session' => $j]);
-//                    }
                 }
             }else{
                 $arr = $request->only([
@@ -207,14 +151,9 @@ class ClasseController extends Controller
                     "name",
                     'start_date',
                     'end_date',
-                    'all_session'
                     ]);
                 Classe::create($arr);
-//                for($i = 1; $i <= (int)$request['all_session']; $i++){
-//                    listPoint::create(['classe_id' => $class->id, 'session' => $i]);
-//                }
             }
-
             DB::commit();
             return $this->successResponse();
         } catch (Throwable $e){
@@ -228,28 +167,11 @@ class ClasseController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Classe  $classe
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
-    public function show($classeId)
+    public function show(Classe $classe)
     {
-        $data = $this->model->findOrFail($classeId);
-        $teacher = Teacher::query()->where('id', $data->teacher_id)->first();
-        $studentid= ListPoint::query()->where('classe_id', $classeId)->Where('session',1)->pluck('students_id');
-        $students = [];
-        foreach($studentid as $student){
-            $student = Student::query()->where('id',$student )->first();
-            $students[] = $student;
-        }
-        $arr = [];
-        for($i = 1; $i <= $data->all_session; $i++){
-            $arr[] = $i;
-        }
-        return(view('manager.classes.detail', [
-            'lesson'=>$arr,
-            'data' => $data,
-            'teacher' => $teacher,
-            'students' => $students,
-        ]));
+        //
     }
 
     /**
@@ -262,7 +184,6 @@ class ClasseController extends Controller
     {
         //
     }
-
 
     /**
      * Update the specified resource in storage.

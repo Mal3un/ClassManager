@@ -15,8 +15,8 @@ class CreateListPointsTable extends Migration
     {
         Schema::create('list_points', function (Blueprint $table) {
             $table->foreignId('classe_id')->constrained();
-            $table->foreignId('student_id')->constrained();
-            $table->foreignId('teacher_id')->constrained()->nullable();
+            $table->foreignId('students_id')->constrained();
+            $table->foreignId('teacher_id')->constrained();
             $table->smallInteger('status')->default(1);
             $table->text('note')->nullable();
             $table->

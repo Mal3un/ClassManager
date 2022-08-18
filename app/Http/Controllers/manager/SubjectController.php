@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers\manager;
 
-use App\Enums\ClassTypeEnum;
-use App\Enums\SubjectTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
-use App\Models\Classe;
 use App\Models\Major;
 use App\Models\Subject;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Throwable;
 
 class SubjectController extends Controller
 {
@@ -52,7 +46,6 @@ class SubjectController extends Controller
         $data = $query->paginate();
         $major = Major::all();
         $subject = Subject::all();
-        $subject_type = SubjectTypeEnum::getKeys();
         if(($selectedMajor !== 'All...' && !empty($selectedMajor))) {
             $subject = Subject::query()->where('major_id', $selectedMajor)->get();
         }
@@ -64,8 +57,6 @@ class SubjectController extends Controller
 
             'selectedSubject' => $selectedSubject,
             'selectedMajor' => $selectedMajor,
-
-            'subject_types' => $subject_type,
         ]));
     }
 
@@ -83,25 +74,11 @@ class SubjectController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreSubjectRequest  $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubjectRequest $request) : JsonResponse
+    public function store(StoreSubjectRequest $request)
     {
-        DB::beginTransaction();
-        try{
-                $arr = $request->only([
-                    'name',
-                    'major_id',
-                    'number_credits',
-                    'study_type',
-                ]);
-                Subject::create($arr);
-            DB::commit();
-            return $this->successResponse();
-        } catch (Throwable $e){
-            DB::rollback();
-            return $this->errorResponse($e, 500);
-        }
+        //
     }
 
     /**

@@ -58,11 +58,6 @@
                     <span> Giáo viên </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
-                    <li>
-                        <a href="{{route('manager.teachers.index')}}">Danh sách giáo viên</a>
-                    </li>
-                </ul>
             </li>
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
@@ -92,10 +87,10 @@
                         <a href="{{route('manager.classes.index')}}">Lớp học chính thức</a>
                     </li>
                     <li>
-                        <a href="apps-ecommerce-products-details.html">Điểm danh lớp học</a>
+                        <a href="apps-ecommerce-products-details.html">Lớp học cải thiện</a>
                     </li>
                     <li>
-                        <a href="">Lớp học của tôi</a>
+                        <a href="{{route('manager.classes.myclass')}}">Lớp học của tôi</a>
                     </li>
                 </ul>
             </li>
@@ -114,21 +109,6 @@
                     </li>
                     <li>
                         <a href="apps-ecommerce-orders.html">Khác</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="side-nav-item">
-                <a href="javascript: void(0);" class="side-nav-link">
-                    <i class=" uil-calendar-alt"></i>
-                    <span> Đăng ký học tập </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
-                    <li>
-                        <a href="{{route('manager.divisionstudent.index')}}">Giáo viên</a>
-                    </li>
-                    <li>
-                        <a href="apps-ecommerce-products-details.html">Sinh viên</a>
                     </li>
                 </ul>
             </li>
