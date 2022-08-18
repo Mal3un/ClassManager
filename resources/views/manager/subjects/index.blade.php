@@ -109,10 +109,7 @@
 
             $('#modal-major').select2();
             $('#modal-subject-type').select2();
-<<<<<<< HEAD
-            // $('#number_credits').select2();
-=======
->>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
+
             $(document).ready(async function() {
                 $('.select-filter-subject,.select-filter-major').change(function(){
                     $('#form-filter').submit();
@@ -170,12 +167,9 @@
                     }
                 });
             }
-<<<<<<< HEAD
             function hidemodel(idName){
                 $('#'+ idName).hide();
             }
-=======
->>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
         </script>
     @endpush
     <div id="modal-create-classe" class="modal" tabindex="-1" role="dialog" style="background-color:rgba(0,0,0,0.5)">

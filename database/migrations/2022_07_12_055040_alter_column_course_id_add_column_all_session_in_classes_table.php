@@ -13,21 +13,12 @@ class AlterColumnCourseIdAddColumnAllSessionInClassesTable extends Migration
      */
     public function up()
     {
-<<<<<<< HEAD
 //        Schema::table('classes', function (Blueprint $table) {
 //            $table->SmallInteger('all_session');
 //        });
 //        Schema::table('list_points', function (Blueprint $table) {
 //            $table->SmallInteger('lesson');
 //        });
-=======
-        Schema::table('classes', function (Blueprint $table) {
-            $table->SmallInteger('all_session');
-        });
-        Schema::table('list_points', function (Blueprint $table) {
-            $table->SmallInteger('lesson');
-        });
->>>>>>> 87c9dcc6b935912706466e4df36e944843cab1d1
     }
 
     /**
