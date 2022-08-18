@@ -13,9 +13,11 @@ class AlterColumnRankInScoreTable extends Migration
      */
     public function up()
     {
-        Schema::table('scores', function (Blueprint $table) {
-            $table->foreignId('subject_id')->constrained();
-        });
+        if (!Schema::hasColumn('scores', 'subject_id')) {
+            Schema::table('scores', function (Blueprint $table) {
+                $table->foreignId('subject_id')->constrained();
+            });
+        }
     }
 
     /**

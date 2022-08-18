@@ -13,9 +13,11 @@ class AlterAddColumnAllSessionInClassesTable extends Migration
      */
     public function up()
     {
-        Schema::table('classes', function (Blueprint $table) {
-            $table->smallInteger('all_session')->default(1);
-        });
+        if (!Schema::hasColumn('classes', 'all_session')) {
+            Schema::table('classes', function (Blueprint $table) {
+                $table->smallInteger('all_session')->default(1);
+            });
+        }
     }
 
     /**

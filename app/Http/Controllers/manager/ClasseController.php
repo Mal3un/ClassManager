@@ -117,7 +117,7 @@ class ClasseController extends Controller
         try{
             $studentIds = listPoint::query()
                 ->where('session',$request->get('lesson'))
-                ->where('classe_id',$request->get('class_id'))->get(['students_id','status'])->toArray();
+                ->where('classe_id',$request->get('class_id'))->get(['students_id','status','note'])->toArray();
             $students = [];
             foreach($studentIds as $student){
                 $student['info'] = Student::find($student['students_id'])->toArray();
@@ -135,15 +135,30 @@ class ClasseController extends Controller
         try{
             $class = $request->get('classid');
             $lesson = $request->get('lesson');
+            $a =ListPoint::query()
+                ->where('classe_id',$class)
+                ->where('session',$lesson)->first();
             $arr = explode("&", $request->get('status'));
-            foreach ($arr as $each){
+            foreach ($arr as $key=>$each){
                 $each = str_replace('id','',$each);
                 $set = explode('=',$each);
+                if($key === 0){
+                    $note = $request->get('note');
+                    ListPoint::query()
+                        ->where('students_id',$set[0])
+                        ->where('session',$lesson)
+                        ->where('classe_id',$class)
+                        ->update([
+                            'note'=>$note,
+                        ]);
+                }
                 ListPoint::query()
                     ->where('students_id',$set[0])
                     ->where('session',$lesson)
                     ->where('classe_id',$class)
-                    ->update(['status'=>$set[1]]);
+                    ->update([
+                        'status'=>$set[1],
+                    ]);
             }
             return $this->successResponse();
         }catch(Exception $e){

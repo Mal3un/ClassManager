@@ -111,6 +111,7 @@
                         let status2 = 0;
                         let status3 = 0;
                         let total = data.data.length;
+                        let note = data.data[0].note;
                         data.data.forEach(function(each,index) {
                             if(each.status === 1) {
                                 status1++;
@@ -180,6 +181,7 @@
                             text+=`</tr>`;
                         });
                         let session =  $('#select-lesson').val();
+                        $('#modal-list-point-note').val(note);
                         $('#modal-list-point-total').html('Tổng số: '+ total + " sinh viên");
                         $('#modal-list-point-status1').html('Đi học: '+ status1 + " sinh viên");
                         $('#modal-list-point-status2').html('Đi muộn: '+ status2 + " sinh viên");
@@ -207,6 +209,9 @@
             });
             $('.select-filter-lesson').select2();
             $(document).ready(async function() {
+                $('#modal-set-point-list').on('modal.hide',async function() {
+                    $('#modal-list-point-note').val('');
+                });
                 $('#btn-point-list').on('click', function(e) {
                     e.preventDefault();
                     $('#modal-set-point_list').html('');
@@ -234,14 +239,15 @@
                     let raw = $('#form-set-point-list').serialize();
                     let session =  $('#select-lesson').val();
                     let class_id = $('#class_id').val();
-                    console.log(1);
+                    let note = $('#modal-list-point-note').val();
                     $.ajax({
                         url: '{{route('api.classes.setPointList')}}',
                         type: 'POST',
                         data: {
                             classid:class_id,
                             lesson: session,
-                            status: raw
+                            status: raw,
+                            note: note
                         },
                         success: async function(data){
                             $.toast(
@@ -255,7 +261,6 @@
                                 },
                             );
                             $('#modal-set-point_list').html('');
-                            console.log($('#modal-set-point_list').html());
                             loadingInfoList();
                             $('#btn-update-point-list').html('Đã cập nhật');
                             $('#btn-update-point-list').attr('class','btn btn-success float-right mt-3');
@@ -307,11 +312,16 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <div style="float:left;position:relative;left:10px;width:100%">
-                        <span id="modal-list-point-total"></span><br>
-                        <span id="modal-list-point-status1"></span><br>
-                        <span id="modal-list-point-status2"></span><br>
-                        <span id="modal-list-point-status3"></span><br>
+                    <div class="d-flex" style="float:left;position:relative;left:10px;width:100%">
+                        <div class="info-listpoint-status-session w-25">
+                            <span id="modal-list-point-total"></span><br>
+                            <span id="modal-list-point-status1"></span><br>
+                            <span id="modal-list-point-status2"></span><br>
+                            <span id="modal-list-point-status3"></span><br>
+                        </div>
+                        <div class="info-listpoint-status-session w-75">
+                            <textarea id="modal-list-point-note" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
+                        </div>
                     </div>
                     <button type="submit" id="btn-update-point-list" class="">
 

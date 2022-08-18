@@ -15,6 +15,7 @@ class CreateScoresTable extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->foreignId('student_id')->constrained();
+            $table->foreignId('subject_id')->constrained();
             $table->float('listpoint_score')->nullable();
             $table->float('midterm_score')->nullable();
             $table->float('lastterm_score')->nullable();

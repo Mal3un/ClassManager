@@ -8,6 +8,7 @@ use App\Models\Classe;
 use App\Models\Course;
 use App\Models\ListPoint;
 use App\Models\Major;
+use App\Models\Score;
 use App\Models\Student;
 use App\Models\Teacher;
 use Exception;
@@ -104,10 +105,14 @@ class DivisonStudentController extends Controller
 
     public function set(Request $request): JsonResponse
     {
-
         try{
            $student = Student::find($request->get('id'));
            $classes = Classe::find($request->get('class'));
+           $arrScore = [
+                'student_id' =>  $student['id'],
+                'subject_id' => $classes['subject_id'],
+           ];
+           Score::create($arrScore);
            for($i = 1; $i <= (int)$classes['all_session']; $i++) {
                $data = [
                      'students_id' => $student['id'],
