@@ -26,7 +26,7 @@
         <!--- Sidemenu -->
         <ul class="metismenu side-nav">
 
-            <li class="side-nav-title side-nav-item">Navigation</li>
+            <li class="side-nav-title side-nav-item">Thông tin</li>
 
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
@@ -47,12 +47,6 @@
                 </ul>
             </li>
             <li class="side-nav-item">
-                <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
-                    <i class="mdi mdi-book-open-page-variant"></i>
-                    <span> Môn học </span>
-                </a>
-            </li>
-            <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class="uil-users-alt"></i>
                     <span> Giáo viên </span>
@@ -61,38 +55,6 @@
                 <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
                     <li>
                         <a href="{{route('manager.teachers.index')}}">Danh sách giáo viên</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="side-nav-item">
-                <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="mdi mdi-clipboard-text-multiple"></i>
-                    <span> Phân công giảng dậy </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
-                    <li>
-                        <a href="{{route('manager.division.index')}}">Danh sách phần công</a>
-                    </li>
-{{--                    @if(auth()->role() === 3)--}}
-                        <li>
-                            <a href="{{route('manager.division.index2')}}">Phân công giảng dạy</a>
-                        </li>
-{{--                    @endif--}}
-                </ul>
-            </li>
-            <li class="side-nav-item">
-                <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="mdi mdi-google-classroom"></i>
-                    <span> Lớp học </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
-                    <li>
-                        <a href="{{route('manager.classes.index')}}">Lớp học chính thức</a>
-                    </li>
-                    <li>
-                        <a href="apps-ecommerce-products-details.html">Điểm danh lớp học</a>
                     </li>
                 </ul>
             </li>
@@ -114,6 +76,52 @@
                     </li>
                 </ul>
             </li>
+            <li class="side-nav-title side-nav-item">Quản lý</li>
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class="mdi mdi-google-classroom"></i>
+                    <span> Lớp học </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
+                    <li>
+                        <a href="{{route('manager.classes.index')}}">Lớp học chính thức</a>
+                    </li>
+                    <li>
+                        <a href="apps-ecommerce-products-details.html">Điểm danh lớp học</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
+                    <i class="mdi mdi-book-open-page-variant"></i>
+                    <span> Môn học </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{route('manager.courses.index')}}" class="side-nav-link">
+                    <i class="uil-graduation-hat"></i>
+                    <span> Khóa học </span>
+                </a>
+            </li>
+            <li class="side-nav-title side-nav-item">Đăng ký</li>
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class="mdi mdi-clipboard-text-multiple"></i>
+                    <span> Phân công giảng dậy </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
+                    <li>
+                        <a href="{{route('manager.division.index')}}">Danh sách phần công</a>
+                    </li>
+                    {{--                    @if(auth()->role() === 3)--}}
+                    <li>
+                        <a href="{{route('manager.division.index2')}}">Phân công giảng dạy</a>
+                    </li>
+                    {{--                    @endif--}}
+                </ul>
+            </li>
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class=" uil-calendar-alt"></i>
@@ -128,12 +136,6 @@
                         <a href="apps-ecommerce-products-details.html">Sinh viên</a>
                     </li>
                 </ul>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{route('manager.courses.index')}}" class="side-nav-link">
-                    <i class="uil-graduation-hat"></i>
-                    <span> Khóa học </span>
-                </a>
             </li>
         </ul>
     </div>

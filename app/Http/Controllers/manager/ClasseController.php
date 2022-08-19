@@ -292,7 +292,9 @@ class ClasseController extends Controller
         $studentid= ListPoint::query()->where('classe_id', $classeId)->Where('session',1)->pluck('students_id');
         $students = [];
         foreach($studentid as $student){
-            $student = Student::query()->where('id',$student )->first();
+            $student = Student::find($student);
+            $status = ListPoint::query()->where('students_id', $student->id)->where('classe_id', $classeId)->where('status', 1)->count();
+            $student['status'] = $status;
             $students[] = $student;
         }
         $arr = [];

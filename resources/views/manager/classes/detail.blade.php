@@ -52,6 +52,8 @@
                                         <th>Giới tính</th>
                                         <th>Ngày sinh</th>
                                         <th>Gmail</th>
+                                        <th>Số buổi nghỉ</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,6 +88,29 @@
                                                     {{$each->email}}
                                                 </a>
                                             </td>
+                                            <td>
+                                                <span style="color:black">{{count($lesson) - $each->status}} / {{count($lesson)}}</span>
+                                            </td>
+                                            @if((count($lesson) - $each->status) < ((count($lesson)*0.4)-1))
+                                                <td style="text-align:center">
+                                                    <i   class="mdi mdi-emoticon " style="color:#42d29d;font-size:30px;"></i>
+                                                    <h6 style="margin:0px" >Tốt</h6>
+                                                </td>
+                                            @endif
+                                            @if((count($lesson) - $each->status) >= ((count($lesson)*0.4)-1) && (count($lesson) - $each->status) < ((count($lesson)*0.4)))
+                                                <td style="text-align:center">
+                                                    <i   class="mdi mdi-emoticon-neutral " style="color:#f9bc0d;font-size:30px;"></i>
+                                                    <h6 style="margin:0px" >Cảnh báo</h6>
+                                                </td>
+                                            @endif
+                                            @if((count($lesson) - $each->status) >= ((count($lesson)*0.4)))
+                                                <td style="text-align:center">
+                                                    <i  class="mdi mdi-emoticon-sad " style="color:#fa6767;font-size:30px;"></i>
+                                                    <h6 style="margin:0px" >Vi phạm</h6>
+                                                </td>
+                                            @endif
+
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -219,7 +244,6 @@
                         let text = ``;
 
                         data.data.forEach(function (each,index) {
-                            console.log(each);
                             if(each.listpoint_score === null){
                                 each.listpoint_score = '';
                             }
@@ -287,8 +311,9 @@
 
 
             $(document).ready(async function() {
-                $('#modal-set-point-list').on('modal.hide',async function() {
-                    $('#modal-list-point-note').val('');
+                $('#modal-set-point-list').on('hidden.bs.modal',function() {
+                    // $('#modal-list-point-note').val('');
+                    location.reload();
                 });
 
                 $('#btn-point-list').on('click', function(e) {
