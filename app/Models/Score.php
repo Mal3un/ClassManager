@@ -15,6 +15,7 @@ class Score extends Model
         'lastterm_score',
         'note',
         'rank',
-        'subject_id'
+        'subject_id',
+        'classe_id'
     ];
 }

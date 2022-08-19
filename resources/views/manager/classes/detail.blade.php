@@ -27,12 +27,15 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div style="margin-top:20px;">
-                                <form method="post" action="">
+                            <div class="w-100">
+                                <form class="w-100 d-flex mt-3 justify-content-sm-between" method="post" action="">
                                     @csrf
                                     <input id="class_id" type="hidden" name="class_id" value="{{$data->id}}">
                                     <button id="btn-point-list" type="submit" name="point_list" class="btn btn-primary">
                                         Điểm danh lớp học
+                                    </button>
+                                    <button id="btn-open-score" type="submit" name="score" class="btn btn-success">
+                                        Nhập điểm
                                     </button>
                                 </form>
                             </div>
@@ -95,7 +98,7 @@
     @push('js')
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
-            function loadingInfoList(){
+            function loadingInfoListPoint(){
                 var lesson = $('#select-lesson').val();
                 var class_id = $('#class_id').val();
                 $.ajax({
@@ -203,15 +206,91 @@
                     }
                 });
             }
+
+            function loadingInfoScore(){
+                let class_id = $('#class_id').val();
+                $.ajax({
+                    url:'{{route('api.classes.score')}}',
+                    type: 'POST',
+                    data: {
+                        class_id: class_id,
+                    },
+                    success: async function(data) {
+                        let text = ``;
+
+                        data.data.forEach(function (each,index) {
+                            console.log(each);
+                            if(each.listpoint_score === null){
+                                each.listpoint_score = '';
+                            }
+                            if(each.midterm_score === null){
+                                each.midterm_score = '';
+                            }
+                            if(each.note === null){
+                                each.note = '';
+                            }
+                            text +=
+                                `
+                                        <tr>
+                                            <td style="color:black">
+                                                    ${index+1}
+                                            </td>
+                                            <td style="">
+                                                <span style="color:black">${each.student_id.first_name} ${each.student_id.last_name}</span>
+                                            </td>
+                                            <td>
+                                                <span style="color:black">${each.student_id.birthdate}</span>
+                                                <br>
+                                            </td>
+                                            <td>
+                                                <a href="mailto::${each.student_id.email}">
+                                                    ${each.student_id.email}
+                                                </a>
+                                            </td>
+                                            <td>
+
+                                                <input style="width:40%"  value="${each.listpoint_score}" id="${each.student_id.id}-listpoint" name="${each.student_id.id}-listpoint" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input style="width:40%"  value="${each.midterm_score}" id="${each.student_id.id}-mid" name="${each.student_id.id}-mid" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="HS" value="">
+                                                <textarea id="${each.student_id.id}-note" class="form-control student-note-in-class" rows="3" value="${each.note}" placeholder="note">${each.note}</textarea>
+                                            </td>
+                                        </tr>
+                                `;
+                        });
+                        $('#modal-set-score-body').append(`${text}`);
+                    },
+                    error: async function(){
+                        $.toast(
+                            {
+                                heading: 'Lỗi',
+                                text: 'Có lỗi xảy ra',
+                                showHideTransition: 'fade',
+                                icon: 'error',
+                                position: 'top-right',
+                                hideAfter: 5000
+                            }
+                        );
+                    }
+                })
+            }
+
+
             $('#select-lesson').select2({
                 placeholder: 'Chọn buổi học',
                 allowClear: true
             });
             $('.select-filter-lesson').select2();
+
+
             $(document).ready(async function() {
                 $('#modal-set-point-list').on('modal.hide',async function() {
                     $('#modal-list-point-note').val('');
                 });
+
                 $('#btn-point-list').on('click', function(e) {
                     e.preventDefault();
                     $('#modal-set-point_list').html('');
@@ -228,12 +307,21 @@
                             }
                         );
                     }else {
-                        loadingInfoList();
+                        loadingInfoListPoint();
                         $('#modal-set-point-list').modal('show');
                         $('#btn-update-point-list').html('Cập nhật');
                         $('#btn-update-point-list').attr('class','btn btn-primary float-right mt-3 ');
                     }
                 });
+                $('#btn-open-score').on('click', function(e) {
+                    e.preventDefault();
+                    $('#modal-set-score-body').html('');
+                    loadingInfoScore();
+                    $('#modal-set-score').modal('show');
+                    $('#btn-update-score').html('Cập nhật điểm');
+                    $('#btn-update-score').attr('class','btn btn-primary float-right mt-3 ');
+                });
+
                 $('#btn-update-point-list').on('click', function(e) {
                     e.preventDefault();
                     let raw = $('#form-set-point-list').serialize();
@@ -261,7 +349,7 @@
                                 },
                             );
                             $('#modal-set-point_list').html('');
-                            loadingInfoList();
+                            loadingInfoListPoint();
                             $('#btn-update-point-list').html('Đã cập nhật');
                             $('#btn-update-point-list').attr('class','btn btn-success float-right mt-3');
                         },
@@ -279,6 +367,52 @@
                         }
                     });
                 });
+                $('#btn-update-score').on('click',async function (e){
+                    e.preventDefault();
+                    let raw = $('#form-set-score').serialize();
+                    let class_id = $('#class_id').val();
+
+                    let arr = $('.student-note-in-class').map(await function(){
+                        return $(this).attr('id') + '=' + $(this).val();
+                    }).get();
+                    $.ajax({
+                        url: '{{route('api.classes.setScore')}}',
+                        type: 'POST',
+                        data: {
+                            classid:class_id,
+                            data: raw,
+                            arr: arr
+                        },
+                        success: async function(data){
+                            $.toast(
+                                {
+                                    heading: 'Thành công',
+                                    text: 'Cập nhật điểm thành công',
+                                    showHideTransition: 'fade',
+                                    icon: 'success',
+                                    position: 'top-right',
+                                    hideAfter: 5000
+                                },
+                            );
+                            $('#modal-set-score-body').html('');
+                            loadingInfoScore();
+                            $('#btn-update-score').html('Đã cập nhật');
+                            $('#btn-update-score').attr('class','btn btn-success float-right mt-3');
+                        },
+                        error: function() {
+                            $.toast(
+                                {
+                                    heading: 'Lỗi',
+                                    text: 'Có lỗi xảy ra',
+                                    showHideTransition: 'fade',
+                                    icon: 'error',
+                                    position: 'top-right',
+                                    hideAfter: 5000
+                                }
+                            );
+                        }
+                    })
+                })
             });
         </script>
     @endpush
@@ -325,6 +459,54 @@
                     </div>
                     <button type="submit" id="btn-update-point-list" class="">
 
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-set-score" style="padding:20px" class="modal" tabindex="-1" role="dialog" style="background-color:rgba(0,0,0,0.5)">
+        <div class="modal-dialog modal-lg modal-full-width modal-dialog-scrollable" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 id="modal-title" class="modal-title">Điểm số</h5>
+                    <button type="button" onclick="hidemodel('modal-set-score')" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form id="form-set-score" action="">
+                        <table class="table table-hover table-centered mb-0">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên sinh viên</th>
+                                <th>Ngày sinh</th>
+                                <th>Gmail</th>
+                                <th style="width:10%">Điểm chuyên cần</th>
+                                <th style="width:10%">Điểm giữa kì</th>
+                                <th style="width:25%">Note</th>
+                            </tr>
+                            </thead>
+                            <tbody id="modal-set-score-body">
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+{{--                    <div class="d-flex" style="float:left;position:relative;left:10px;width:100%">--}}
+{{--                        <div class="info-listpoint-status-session w-25">--}}
+{{--                            <span id="modal-list-point-total"></span><br>--}}
+{{--                            <span id="modal-list-point-status1"></span><br>--}}
+{{--                            <span id="modal-list-point-status2"></span><br>--}}
+{{--                            <span id="modal-list-point-status3"></span><br>--}}
+{{--                        </div>--}}
+{{--                        <div class="info-listpoint-status-session w-75">--}}
+{{--                            <textarea id="modal-list-point-note" class="form-control" rows="3" placeholder="Ghi chú"></textarea>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                    <button type="submit" id="btn-update-score" class="">
                     </button>
                 </div>
             </div>

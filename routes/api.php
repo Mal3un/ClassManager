@@ -34,4 +34,6 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('/classes/point_list', [ClasseController::class, 'point_list'])->name('classes.point_list');
     Route::post('/classes/setPointList', [ClasseController::class, 'setPointList'])->name('classes.setPointList');
+    Route::post('/classes/score', [ClasseController::class, 'score'])->name('classes.score');
+    Route::post('/classes/setScore', [ClasseController::class, 'setScore'])->name('classes.setScore');
 

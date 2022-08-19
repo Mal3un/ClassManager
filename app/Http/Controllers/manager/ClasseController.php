@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateClasseRequest;
 use App\Models\Course;
 use App\Models\ListPoint;
 use App\Models\Major;
+use App\Models\Score;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -130,6 +131,22 @@ class ClasseController extends Controller
         }
     }
 
+    public function score(Request $request) : JsonResponse
+    {
+        try{
+            $class = Classe::find($request->get('class_id'))->id;
+            $score = Score::query()->where('classe_id',$class)->get(['student_id','listpoint_score','midterm_score','note'])->toArray();
+            $data = [];
+            foreach($score as $each){
+                $each['student_id'] = Student::find($each['student_id'])->toArray();
+                $data[] = $each;
+            }
+            return $this->successResponse($data);
+        }catch (Throwable $e){
+            return $this->errorResponse($e->getMessage(),500);
+        }
+    }
+
     public function setPointList(Request $request) : JsonResponse
     {
         try{
@@ -165,6 +182,45 @@ class ClasseController extends Controller
             return $this->errorResponse($e->getMessage(),500);
         }
     }
+
+    public function setScore(Request $request) : JsonResponse
+    {
+        try{
+            $data = $request->get('data');
+            $class = $request->get('classid');
+            $notelist = $request->get('arr');
+            $arr = explode("&HS=&", $request->get('data'));
+            $arr[count($arr)-1] = str_replace('&HS=','',$arr[count($arr)-1]);
+            foreach ($arr as $each){
+                $each = explode('&',$each);
+                $each[0] = explode('=',str_replace('-listpoint','',$each[0]));
+                $listpoint_score = $each[0][1];
+                $student_id = $each[0][0];
+                $each[1] = str_replace($student_id . '-mid=','',$each[1]);
+                $midterm_score = $each[1];
+                Score::query()
+                    ->where('student_id',$student_id)
+                    ->where('classe_id',$class)
+                    ->update([
+                        'listpoint_score'=>$listpoint_score,
+                        'midterm_score'=>$midterm_score,
+                    ]);
+            }
+            foreach ($notelist as $each){
+                $set = explode('-note=',$each);
+                Score::query()
+                    ->where('student_id',$set[0])
+                    ->where('classe_id',$class)
+                    ->update([
+                        'note'=>$set[1],
+                    ]);
+            }
+            return $this->successResponse();
+        }catch(Exception $e){
+            return $this->errorResponse($e->getMessage(),500);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

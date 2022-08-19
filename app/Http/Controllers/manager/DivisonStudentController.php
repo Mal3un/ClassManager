@@ -118,6 +118,7 @@ class DivisonStudentController extends Controller
            $arrScore = [
                 'student_id' =>  $student['id'],
                 'subject_id' => $classes['subject_id'],
+                'classe_id' => $classes['id'],
            ];
            Score::create($arrScore);
            for($i = 1; $i <= (int)$classes['all_session']; $i++) {
