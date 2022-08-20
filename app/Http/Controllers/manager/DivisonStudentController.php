@@ -50,6 +50,7 @@ class DivisonStudentController extends Controller
 
         $selectedCourse = $request['course'];
         $selectedClass = $request['classes'];
+        $classtest = Classe::find($selectedClass);
         $selectedMajor = $request['major'];
         $selectedStudent = $request['student'];
         $arrNameStudent = explode(" ",$selectedStudent);
@@ -69,10 +70,9 @@ class DivisonStudentController extends Controller
         if($selectedStudent !== 'All...' && !empty($selectedStudent)){
             $query->where('first_name',  $arrNameStudent[0])->where('last_name', $arrNameStudent[1]);
         }
-        if($selectedClass !== null && $selectedClass !== 'chọn lớp học'){
-            $studentlist = ListPoint::query()->where('classe_id', $selectedClass)->where('session',1)->pluck('students_id');
-            $student = Student::query()->whereNotIn('id',$studentlist)->get();
-            $query->whereNotIn('id',$studentlist);
+        if($selectedClass !== null && $selectedClass !== 'Chọn lớp học'){
+            $studentList = ListPoint::query()->where('session',1)->where('subject_id',$classtest['subject_id'])->pluck("students_id");
+            $query->whereNotIn('id',$studentList);
         }
         $data = $query->paginate(30);
         if(($selectedMajor !== 'All...' && !empty($selectedMajor)) && ($selectedCourse !== 'All...' && !empty($selectedCourse))){
@@ -125,6 +125,7 @@ class DivisonStudentController extends Controller
                $data = [
                      'students_id' => $student['id'],
                      'classe_id' => $classes['id'],
+                     'subject_id' => $classes['subject_id'],
                      'session' => $i,
                ];
                ListPoint::create($data);

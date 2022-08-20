@@ -13,6 +13,7 @@ class ListPoint extends Model
         'students_id',
         'session',
         'status',
-        'note'
+        'note',
+        'subject_id'
     ];
 }

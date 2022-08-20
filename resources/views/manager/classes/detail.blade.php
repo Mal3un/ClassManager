@@ -501,7 +501,7 @@
                 </div>
                 <div class="modal-body ">
                     <form id="form-set-score" action="">
-                        <table class="table table-hover table-centered mb-0">
+                        <table class="table table-striped table-centered mb-0">
                             <thead>
                             <tr>
                                 <th>#</th>

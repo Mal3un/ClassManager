@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterColumnCourseIdAddColumnAllSessionInClassesTable extends Migration
+class AlterAddColumnSubjectIdInListPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AlterColumnCourseIdAddColumnAllSessionInClassesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('classes', 'all_session')) {
-            Schema::table('classes', function (Blueprint $table) {
-                $table->SmallInteger('all_session');
+        if (!Schema::hasColumn('list_points', 'subject_id')) {
+            Schema::table('list_points', function (Blueprint $table) {
+                $table->foreignId('subject_id')->after('classe_id');
             });
         }
     }
@@ -27,7 +27,7 @@ class AlterColumnCourseIdAddColumnAllSessionInClassesTable extends Migration
      */
     public function down()
     {
-        Schema::table('classes', function (Blueprint $table) {
+        Schema::table('list_points', function (Blueprint $table) {
             //
         });
     }
