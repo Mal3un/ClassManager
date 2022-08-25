@@ -22,6 +22,7 @@ class Classe extends Model
         'created_by',
         'updated_by',
         'all_session',
+        'schedule',
     ];
     public function course(): BelongsTo
     {

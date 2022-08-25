@@ -236,6 +236,38 @@ class ClasseController extends Controller
     {
         DB::beginTransaction();
         try{
+            $days = (int) $request->get('quality_day');
+            $schedule = '';
+            for($i = 1; $i <= $days; $i++){
+                $day = $request->get('day-'.$i);
+                switch ($day){
+                    case '2':
+                        $day='M';
+                        break;
+                    case '3':
+                        $day='T';
+                        break;
+                    case '4':
+                        $day='W';
+                        break;
+                    case '5':
+                        $day='t';
+                        break;
+                    case '6':
+                        $day='F';
+                        break;
+                    case '7':
+                        $day='S';
+                        break;
+                    case '8':
+                        $day='s';
+                        break;
+                }
+                $start = $request->get('start-lesson-'.$i);
+                $end = $request->get('end-lesson-'.$i);
+                $schedule = $schedule.$day.$start.','.$end.'-';
+            }
+            $schedule = rtrim($schedule,'-');
             $quality = (int) $request->get('quality-class');
             if($quality > 1 ){
                 for($i = 1; $i <= $quality; $i++){
@@ -247,9 +279,10 @@ class ClasseController extends Controller
                         'subject_id',
                         'start_date',
                         'end_date',
-                        'all_session'
+                        'all_session',
                     ]);
                     $data['name'] =  $name;
+                    $data['schedule'] = $schedule;
                     Classe::create($data);
 //                    for($j = 1; $j <= (int)$request['all_session']; $j++){
 //                        listPoint::create(['classe_id' => $class->id, 'session' => $j]);
@@ -266,6 +299,7 @@ class ClasseController extends Controller
                     'end_date',
                     'all_session'
                     ]);
+                $arr['schedule'] = $schedule;
                 Classe::create($arr);
 //                for($i = 1; $i <= (int)$request['all_session']; $i++){
 //                    listPoint::create(['classe_id' => $class->id, 'session' => $i]);
@@ -320,6 +354,19 @@ class ClasseController extends Controller
     {
         $student = Score::query()->where('student_id', $request->student)->get();
         dd($student);
+    }
+
+    public function schedule(){
+        $classes = Classe::query()->where('schedule', '=',null)->get(['id','name','course_id','major_id','class_type']);
+        foreach ($classes as $each){
+            $each->course = Course::query()->where('id', $each->course_id)->first()->name;
+            $each->major = Major::query()->where('id', $each->major_id)->first()->name;
+            $each->class_type = ClassTypeEnum::getKey($each->class_type);
+        }
+        return view('manager.classes.schedule', [
+            'title' => 'Schedule',
+            'classes' => $classes,
+        ]);
     }
 
     /**

@@ -125,7 +125,7 @@
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class=" uil-calendar-alt"></i>
-                    <span> Đăng ký học tập </span>
+                    <span> Đăng ký lớp học </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">

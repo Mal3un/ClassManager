@@ -235,6 +235,78 @@
                  $('#modal-major,#modal-subject,#modal-course,#modal-quality-class').change(function(){
                      generateClassName();
                 });
+                 $('#modal-create-classe').on('hidden.bs.modal', function () {
+                     $('#modal-schedule').html('');
+                     $('#modal-quality-day').val('1');
+                 })
+                 $('#modal-btn-get-modal-schedule').click(function(e) {
+                     e.preventDefault();
+                     $('#modal-schedule').html('');
+                     let length = $('#modal-quality-day').val();
+                     let content = '';
+                     for(let j = 1; j <= length; j++) {
+                         $(`#modal-start-lesson-${j}`).select2();
+                         $(`#modal-end-lesson-${j}`).select2();
+                         $(`#modal-day-${j}`).select2();
+                         content+=`
+                             <div class="form-group d-flex mb-3">
+                               <div style="height:100%; text-align:center">${j}</div>
+                                <div class="col-md-3">
+                                    <label for="modal-start-lesson-${j}">Tiết bắt đầu</label>
+                                    <select class="custom-select " id="modal-start-lesson-${j}"  name="start-lesson-${j}" >
+                                        <option value=""><span style="color:#ccc">Chọn tiết học</span></option>`
+                                            for(let i=1; i<=12; i++){
+                                                content+=`
+                                                <option value="${i}">
+                                                     Tiết ${i}
+                                                </option>`
+                                            }
+                                        content+=`
+                                    </select>
+                                </div>
+
+                        `;
+                         content+=`
+
+                                <div class="col-md-3">
+                                    <label for="modal-end-lesson-${j}">Tiết kết thúc</label>
+                                    <select class="custom-select " id="modal-end-lesson-${j}"  name="end-lesson-${j}" >
+                                        <option value=""><span style="color:#ccc">Chọn tiết học</span></option>`
+                         for(let i=1; i<=12; i++){
+                             content+=`
+                                                <option value="${i}">
+                                                     Tiết ${i}
+                                                </option>`
+                         }
+                         content+=`
+                                    </select>
+                                </div>
+                        `;
+                         content+=`
+                            <div class="col-md-3">
+                                    <label for="modal-day-${j}">Ngày học</label>
+                                    <select class="custom-select " id="modal-day-${j}"  name="day-${j}" >
+                                        <option value=""><span style="color:#ccc">Chọn ngày học</span></option>`
+                         for(let i=2; i<=8; i++){
+                             if(i===8){
+                                 content+=`
+                                                <option value="${i}">
+                                                     Chủ nhật
+                                                </option>`
+                             }else{
+                                 content+=`
+                                                    <option value="${i}">
+                                                         Thứ ${i}
+                                                    </option>`
+                             }
+                         }
+                            content+=`
+                                        </select>
+                                    </div>
+                                </div>`;
+                     }
+                     $('#modal-schedule').html(content);
+                 });
             });
             function hidemodel(idName){
                 $('#'+ idName).hide();
@@ -301,7 +373,7 @@
                         @csrf
                         <div class="form-group d-flex mb-3">
                             <div class="col-md-4 ">
-                                <label for="modal-courses">Khóa</label>
+                                <label for="modal-course">Khóa</label>
                                 <select class="custom-select " id="modal-course"  name="course_id" >
                                     @foreach($courses as $course )
                                         <option value="{{ $course->id }}">
@@ -316,8 +388,8 @@
                             </div>
                         </div>
                         <div class="form-group d-flex mb-3">
-                            <div class="col-md-4 ">
-                                <label for="modal-majors">Ngành</label>
+                            <div class="col-md-4">
+                                <label for="modal-major">Ngành</label>
                                 <select class="custom-select " id="modal-major"  name="major_id" >
                                     @foreach($majors as $major )
                                         <option value="{{ $major->id }}">
@@ -327,7 +399,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4 ">
-                                <label for="modal-majors">Môn học</label>
+                                <label for="modal-subject">Môn học</label>
                                 <select class="custom-select " id="modal-subject"  name="subject_id" >
 
                                 </select>
@@ -352,10 +424,22 @@
                                 <label for="modal-end_date">Thời gian kết thúc</label>
                                 <input  class="form-control " type="date" id="modal-end_date"   name="end_date">
                             </div>
-                            <div class="col-md-2 ">
-                                <label for="modal-quality-all_session">Số buổi học </label>
+                            <div class="col-md-3 ">
+                                <label for="modal-quality-all_session">Tổng số buổi học</label>
                                 <input  class="form-control " id="modal-quality-all_session" value="1" type="number"  name="all_session">
                             </div>
+                        </div>
+                        <div class="form-group d-flex mb-3">
+                            <div class="col-md-3 ">
+                                <label for="modal-quality-day">Số buổi / tuần</label>
+                                <input  class="form-control " id="modal-quality-day" value="1" type="number"  name="quality_day">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-info" style="margin-top:17%" id="modal-btn-get-modal-schedule">Sắp xếp lịch</button>
+                            </div>
+                        </div>
+                        <div id="modal-schedule">
+
                         </div>
                         <div class="form-group d-flex mb-3">
                             <div class="col-md-6 ">
