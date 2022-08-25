@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterChangeColumnStudentsIdToNullaberInListPointsTable extends Migration
+class AlterAddColumnSheduleInClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AlterChangeColumnStudentsIdToNullaberInListPointsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasColumn('list_points', 'students_id')) {
-            Schema::table('list_points', function (Blueprint $table) {
-                $table->foreignId('students_id')->nullable()->change();
+        if (!Schema::hasColumn('classes', 'schedule')) {
+            Schema::table('classes', function (Blueprint $table) {
+                $table->string('schedule')->nullable();
             });
         }
     }
@@ -27,7 +27,7 @@ class AlterChangeColumnStudentsIdToNullaberInListPointsTable extends Migration
      */
     public function down()
     {
-        Schema::table('nullaber_in_list_points', function (Blueprint $table) {
+        Schema::table('classes', function (Blueprint $table) {
             //
         });
     }

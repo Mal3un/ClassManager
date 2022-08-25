@@ -54,6 +54,7 @@
         'prefix' => 'classes',
     ], static function () {
         Route::get('/', [ClasseController::class, 'index'])->name('index');
+        Route::get('/edit', [ClasseController::class, 'edit'])->name('edit');
 //        Route::get('/create', [CourseController::class, 'create'])->name('create');
         Route::post('/store', [ClasseController::class, 'store'])->name('store');
         Route::post('point_list/{id}', [ClasseController::class, 'point_list'])->name('point_list');
@@ -85,6 +86,7 @@
         'prefix' => 'students',
     ], static function () {
         Route::get('/', [StudentController::class, 'index'])->name('index');
+        Route::get('/schedule', [StudentController::class, 'schedule'])->name('schedule');
     });
     Route::group([
         'as'     => 'teachers.',

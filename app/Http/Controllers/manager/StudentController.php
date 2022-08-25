@@ -72,6 +72,14 @@ class StudentController extends Controller
         ]));
     }
 
+    public function schedule(){
+        $students = Student::all();
+        return view('manager.students.schedule',[
+            'title' => 'Schedule',
+            'students' => $students
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

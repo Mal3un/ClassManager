@@ -39,7 +39,7 @@
                         <a href="{{route('manager.students.index')}}">Thông tin sinh viên</a>
                     </li>
                     <li>
-                        <a href="apps-ecommerce-products-details.html">Thêm sinh viên</a>
+                        <a href="{{route('manager.students.schedule')}}">Xem lịch học của sinh viên</a>
                     </li>
                     <li>
                         <a href="apps-ecommerce-orders.html">Orders</a>

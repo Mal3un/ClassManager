@@ -41,6 +41,7 @@ class ClasseController extends Controller
     }
     public function index(Request $request)
     {
+
         $selectedCourse = $request->get('course');
         $selectedMajor = $request->get('major');
         $selectedClassType = $request->get('classType');
@@ -315,9 +316,10 @@ class ClasseController extends Controller
      * @param  \App\Models\Classe  $classe
      * @return \Illuminate\Http\Response
      */
-    public function edit(Classe $classe)
+    public function edit(request $request)
     {
-        //
+        $student = Score::query()->where('student_id', $request->student)->get();
+        dd($student);
     }
 
     /**
