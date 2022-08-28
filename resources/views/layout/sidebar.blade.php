@@ -2,7 +2,7 @@
 <div class="left-side-menu">
 
     <!-- LOGO -->
-    <a href="index.html" class="logo text-center logo-light">
+    <a href="{{route('manager.welcome')}}" class="logo text-center logo-light">
                     <span class="logo-lg">
                         <img src="assets/images/logo.png" alt="" height="16">
                     </span>

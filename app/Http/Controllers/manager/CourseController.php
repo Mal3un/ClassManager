@@ -67,6 +67,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request) : JsonResponse
     {
+
         try{
             $arr = $request->validated();
             Course::create($arr);

@@ -10,6 +10,8 @@
     use App\Http\Controllers\TeacherController;
     use App\Models\Course;
     use App\Models\Major;
+    use App\Models\Teacher;
+    use Illuminate\Http\Client\Request;
     use Illuminate\Support\Facades\Route;
 
     /*
@@ -23,7 +25,6 @@
     |
     */
     Route::get('/', function () {
-
         return view('manager.index', [
             'title' => 'Manager',
         ]);

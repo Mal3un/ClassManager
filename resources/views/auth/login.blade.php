@@ -60,7 +60,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                        <form method="post" action="{{route('auth.login')}}">
+                        <form method="post" action="{{route('authCheck')}}">
+                            @csrf
                             <div class="card card-login card-hidden">
                                 <div class="card-header text-center" data-background-color="rose">
                                     <h4 class="card-title">Login</h4>
@@ -82,11 +83,11 @@
                                 <div class="card-content">
                                     <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">email</i>
+                                                <i class="material-icons">account_box</i>
                                             </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Email address</label>
-                                            <input type="email" class="form-control">
+                                            <label class="control-label">Username</label>
+                                            <input type="text" name="username" class="form-control">
                                         </div>
                                     </div>
                                     <div class="input-group">
@@ -95,7 +96,7 @@
                                             </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Password</label>
-                                            <input type="password" class="form-control">
+                                            <input type="password" name="password" class="form-control">
                                         </div>
                                     </div>
                                 </div>
