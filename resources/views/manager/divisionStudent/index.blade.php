@@ -103,7 +103,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($data as $each)
+                        @foreach ($data as $key => $each)
                             <tr>
                                 <td style="color:black">
                                     <a href="">
@@ -144,7 +144,7 @@
                                     <span style="color:black">{{$each->major_name}} </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary button-add-student-id"  value="{{$each->id}}" type="button">Thêm</button>
+                                    <button class="btn btn-primary button-add-student-id" id="buttonSet{{$key}}"  value="{{$each->id}}" type="button">Thêm</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -176,8 +176,8 @@
                 $('.button-add-student-id').click(function(e){
                     e.preventDefault();
                     let id = $(this).val();
-                    $(this).attr('class', 'btn btn-success button-add-student-id');
-                    $(this).html('Đã thêm');
+                    let bId=$(this).attr('id');
+                    console.log(bId);
                     $.ajax({
                         url: '{{ route('api.divisionStudent.set') }}',
                         type: 'POST',
@@ -187,10 +187,21 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(data) {
-                            console.log(data);
+                            $('#'+bId).attr('class', 'btn btn-success button-add-student-id');
+                            $('#'+bId).html('Thêm thành công');
                         },
                         error: function(data) {
-                            console.log(data);
+                            $('#'+bId).attr('class', 'btn btn-danger button-add-student-id');
+                            $('#'+bId).html('thêm lại');
+                            $.toast({
+                                size: 'width-larger',
+                                heading: 'Trùng lịch học với lớp:',
+                                text: data.responseJSON.message,
+                                showHideTransition: 'fade',
+                                icon: 'error',
+                                position: 'top-right',
+                                hideAfter: 8000
+                            });
                         }
                     });
                 });

@@ -115,6 +115,54 @@ class DivisonStudentController extends Controller
         try{
            $student = Student::find($request->get('id'));
            $classes = Classe::find($request->get('class'));
+           $schedule = explode('-',$classes->schedule);
+           $info=[];
+           foreach ($schedule as $each){
+               $day = substr($each, 0, 1);
+               $info[$day] = substr($each, 1);
+           }
+           $class = Score::query()->where('student_id',$student['id'])->get('classe_id')->toArray();
+           foreach ($class as $each){
+                $check = Classe::find($each['classe_id'])->get(['schedule','name'])->toArray();
+                $name = $check[0]['name'];
+                $scheduled = $check[0]['schedule'];
+                $scheduled = explode('-',$scheduled);
+                foreach ($scheduled as $schedule){
+                    foreach ($info as $key => $value){
+                        if(substr($schedule, 0, 1) === $key){
+                            $time = substr($schedule, 1);
+                            $time = explode(',',$time);
+                            $value= explode(',',$value);
+                            if(($time[0] >= $value[0] && $time[0] <= $value[1]) || ($time[1] >= $value[0] && $time[1] <= $value[1])){
+                                switch ($key) {
+                                    case 'M':
+                                        $day='Thứ 2';
+                                        break;
+                                    case 'T':
+                                        $day='Thứ 3';
+                                        break;
+                                    case 'W':
+                                        $day='Thứ 4';
+                                        break;
+                                    case 't':
+                                        $day='Thứ 5';
+                                        break;
+                                    case 'F':
+                                        $day='Thứ 6';
+                                        break;
+                                    case 'S':
+                                        $day='Thứ 7';
+                                        break;
+                                    case 's':
+                                        $day='Chủ nhật';
+                                        break;
+                                }
+                                return $this->errorResponse("$name |  $day (T$time[0] - $time[1])",500);
+                            }
+                        }
+                    }
+                }
+           }
            $arrScore = [
                 'student_id' =>  $student['id'],
                 'subject_id' => $classes['subject_id'],

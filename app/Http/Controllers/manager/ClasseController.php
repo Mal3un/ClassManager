@@ -199,6 +199,9 @@ class ClasseController extends Controller
                 $student_id = $each[0][0];
                 $each[1] = str_replace($student_id . '-mid=','',$each[1]);
                 $midterm_score = $each[1];
+                if($listpoint_score === ''){$listpoint_score = null;}
+                if($midterm_score === ''){$midterm_score = null;}
+
                 Score::query()
                     ->where('student_id',$student_id)
                     ->where('classe_id',$class)
