@@ -8,23 +8,28 @@
             <div class="card">
                 <div class="card-header " >
                         <div class="form-group d-flex">
-                            <div class="input-group mb-3 w-15 mr-3">
-                                <label for="select-student">Sinh viên</label>
-                                <select class="custom-select select-filter-student" id="select-student" name="student" >
-                                    <option selected>Chọn sinh viên</option>
-                                    @foreach($students as $student )
-                                        <option value="{{$student->id}} ">
-                                            {{$student->first_name}} {{$student->last_name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        @if(Auth::user()->role_id === 3)
+                                <div class="input-group mb-3 w-15 mr-3">
+                                    <label for="select-student">Sinh viên</label>
+                                    <select class="custom-select select-filter-student" id="select-student" name="student" >
+                                        <option selected>Chọn sinh viên</option>
+                                        @foreach($students as $student )
+                                            <option value="{{$student->id}} ">
+                                                {{$student->first_name}} {{$student->last_name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        @endif
                             <div class="w-25" id="info-student-select">
 
                             </div>
                         </div>
                 </div>
                 <div class="card-body d-flex">
+                    @if(Auth::user()->role_id === 1)
+                        <input type="hidden" id="student_id" value="{{$students}}">
+                    @endif
                     <table class="table table-bordered table-centered mb-0 text-center w-75">
                         <thead>
                         <tr>
@@ -95,8 +100,8 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             $('#select-student').select2();
-
-            $(document).ready(async function() {
+            @if (Auth::user()->role_id ===3)
+                $(document).ready(async function() {
                 $('.select-filter-student').change(function(e){
                     for(let i=1;i<=12;i++){
                         $('#monday-t'+i).html('');
@@ -201,6 +206,112 @@
                     })
                 });
             });
+            @endif
+            @if(Auth::user()->role_id === 1)
+                $(document).ready(async function() {
+                    for(let i=1;i<=12;i++){
+                        $('#monday-t'+i).html('');
+                        $('#monday-t'+i).attr('style','');
+                        $('#tuesday-t'+i).html('');
+                        $('#tuesday-t'+i).attr('style','');
+                        $('#wednesday-t'+i).html('');
+                        $('#wednesday-t'+i).attr('style','');
+                        $('#thursday-t'+i).html('');
+                        $('#thursday-t'+i).attr('style','');
+                        $('#friday-t'+i).html('');
+                        $('#friday-t'+i).attr('style','');
+                        $('#saturday-t'+i).html('');
+                        $('#saturday-t'+i).attr('style','');
+                        $('#sunday-t'+i).html('');
+                        $('#sunday-t'+i).attr('style','');
+                    }
+                    $.ajax({
+                        url: '{{ route('api.scheduleSt.Schedule') }}',
+                        type: 'POST',
+                        data: {
+                            student: $('#student_id').val(),
+                        },
+                        success: function(data) {
+                            let style = 'background-color: lightgreen; color: #0c0c0c; cursor: pointer; font-weight: 550;';
+                            let info = '';
+                            info += `
+                                Name:
+                                    <span style="color:black">${data.data[1].first_name + ' ' + data.data[1].last_name} </span>
+                            `
+                            if(data.data[1].gender === 1){
+                                info += `<i style="font-Size:16px;color:blue" class="mdi mdi-gender-male"></i>
+                                <br>`
+                            }
+                            else if(data.data[1].gender === 2){
+                                info += `<i style="font-Size:16px;color:hotpink" class="mdi mdi-gender-female"></i>
+                                <br>`
+                            }
+                            else if(data.data[1].gender=== 3){
+                                info += `<i style="font-Size:16px;color:green" class="mdi mdi-gender-male-female"></i>
+                                <br>`
+                            }
+                            info += ` Ngày sinh:
+                                    <span style="color:black">${data.data[1].birthdate}</span>
+                                    <br>
+                                    `
+                            info += ` Khóa:
+                                    <span style="color:black">${data.data[1].course}</span>
+                                    <br>
+                                    Ngành:
+                                    <span style="color:black">${data.data[1].major}</span>
+                                    <br>`
+                            $('#info-student-select').html(info);
+                            for(let day in data.data[0]){
+                                switch (day){
+                                    case 'M':
+                                        for(let time in data.data[0][day]){
+                                            $('#monday-t'+time).html(data.data[0][day][time]);
+                                            $('#monday-t'+time).attr('style',`${style}`);
+                                        }
+                                        break;
+                                    case 'T':
+                                        for(let time in data.data[0][day]){
+                                            $('#tuesday-t'+time).html(data.data[0][day][time]);
+                                            $('#tuesday-t'+time).attr('style',`${style}`);
+                                        }
+                                        break;
+                                    case 'W':
+                                        for(let time in data.data[0][day]){
+                                            $('#wednesday-t'+time).html(data.data[0][day][time]);
+                                            $('#wednesday-t'+time).attr('style',`${style}`);
+
+                                        }
+                                        break;
+                                    case 't':
+                                        for(let time in data.data[0][day]){
+                                            $('#thursday-t'+time).html(data.data[0][day][time]);
+                                            $('#thursday-t'+time).attr('style',`${style}`);
+                                        }
+                                        break;
+                                    case 'F':
+                                        for(let time in data.data[0][day]){
+                                            $('#friday-t'+time).html(data.data[0][day][time]);
+                                            $('#friday-t'+time).attr('style',`${style}`);
+                                        }
+                                        break;
+                                    case 'S':
+                                        for(let time in data.data[0][day]){
+                                            $('#saturday-t'+time).html(data.data[0][day][time]);
+                                            $('#saturday-t'+time).attr('style',`${style}`);
+                                        }
+                                        break;
+                                    case 's':
+                                        for(let time in data.data[0][day]){
+                                            $('#sunday-t'+time).html(data.data[0][day][time]);
+                                            $('#sunday-t'+time).attr('style',`${style}`);
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    })
+                });
+            @endif
         </script>
     @endpush
 @endsection()

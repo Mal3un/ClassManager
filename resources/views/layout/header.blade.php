@@ -64,15 +64,20 @@
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                aria-expanded="false">
+                <span class="account-user-avatar">
+                    <img src="{{auth()->user()->avatar}}" alt="avatar" class="rounded-circle">
+                </span>
                 <span>
-                    <span class="account-user-name">{{session('user')['first_name'] .' '. session('user')['last_name']}}</span>
                     @if(auth()->user()->role_id === 1)
+                        <span class="account-user-name">{{session('user')['first_name'] .' '. session('user')['last_name']}}</span>
                         <span class="account-position">Học sinh</span>
                     @endif
                     @if(auth()->user()->role_id === 2)
+                        <span class="account-user-name">{{session('user')['first_name'] .' '. session('user')['last_name']}}</span>
                         <span class="account-position">Giáo viên</span>
                     @endif
                     @if(auth()->user()->role_id === 3)
+                        <span class="account-user-name">Minh Đức</span>
                         <span class="account-position">Quản lý</span>
                     @endif
                 </span>
@@ -84,35 +89,14 @@
                 </div>
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                <a href="{{route('manager.users.index')}}" class="dropdown-item notify-item">
                     <i class="mdi mdi-account-circle mr-1"></i>
                     <span>My Account</span>
                 </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <i class="mdi mdi-account-edit mr-1"></i>
-                    <span>Settings</span>
-                </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <i class="mdi mdi-lifebuoy mr-1"></i>
-                    <span>Support</span>
-                </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <i class="mdi mdi-lock-outline mr-1"></i>
-                    <span>Lock Screen</span>
-                </a>
-
-                <!-- item-->
                 <a href="{{route('logout')}}" class="dropdown-item notify-item">
                     <i class="mdi mdi-logout mr-1"></i>
                     <span>Logout</span>
                 </a>
-
             </div>
         </li>
 

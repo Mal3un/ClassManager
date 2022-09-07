@@ -1,17 +1,14 @@
 <?php
 
-    use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\MajorController;
+    use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\manager\CourseController;
     use App\Http\Controllers\manager\DivisionController;
     use App\Http\Controllers\manager\DivisonStudentController;
     use App\Http\Controllers\manager\StudentController;
     use App\Http\Controllers\manager\SubjectController;
+    use App\Http\Controllers\manager\UserController;
     use App\Http\Controllers\TeacherController;
-    use App\Models\Course;
-    use App\Models\Major;
-    use App\Models\Teacher;
-    use Illuminate\Http\Client\Request;
     use Illuminate\Support\Facades\Route;
 
     /*
@@ -105,3 +102,14 @@
         Route::post('/store', [SubjectController::class, 'store'])->name('store');
 
     });
+
+    Route::group([
+        'as'     => 'users.',
+        'prefix' => 'users',
+    ], static function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('/changePassword', [UserController::class, 'changePassword'])->name('changePassword');
+
+    });
+
+

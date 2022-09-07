@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class StudentController extends Controller
@@ -73,7 +74,12 @@ class StudentController extends Controller
     }
 
     public function schedule(){
-        $students = Student::all();
+        if(Auth::user()->role_id === 3){
+            $students = Student::all();
+        }
+        else{
+            $students = Student::query()->where('user_id', Auth::id())->first()->id;
+        }
         return view('manager.students.schedule',[
             'title' => 'Schedule',
             'students' => $students

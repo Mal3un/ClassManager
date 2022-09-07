@@ -10,7 +10,7 @@ class ListPoint extends Model
     use HasFactory;
     protected $fillable = [
         'classe_id',
-        'students_id',
+        'student_id',
         'session',
         'status',
         'note',

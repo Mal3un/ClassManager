@@ -13,6 +13,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -71,7 +72,7 @@ class DivisonStudentController extends Controller
             $query->where('first_name',  $arrNameStudent[0])->where('last_name', $arrNameStudent[1]);
         }
         if($selectedClass !== null && $selectedClass !== 'Chọn lớp học'){
-            $studentList = ListPoint::query()->where('session',1)->where('subject_id',$classtest['subject_id'])->pluck("students_id");
+            $studentList = ListPoint::query()->where('session',1)->where('subject_id',$classtest['subject_id'])->pluck("student_id");
             $query->whereNotIn('id',$studentList);
         }
         $data = $query->paginate(30);
@@ -110,7 +111,7 @@ class DivisonStudentController extends Controller
 //        return $this->successResponse($classes);
 //    }
 
-    public function set(Request $request): JsonResponse
+    public function set(Request $request)
     {
         try{
            $student = Student::find($request->get('id'));
@@ -171,7 +172,7 @@ class DivisonStudentController extends Controller
            Score::create($arrScore);
            for($i = 1; $i <= (int)$classes['all_session']; $i++) {
                $data = [
-                     'students_id' => $student['id'],
+                     'student_id' => $student['id'],
                      'classe_id' => $classes['id'],
                      'subject_id' => $classes['subject_id'],
                      'session' => $i,

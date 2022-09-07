@@ -188,7 +188,7 @@
                         },
                         success: function(data) {
                             $('#'+bId).attr('class', 'btn btn-success button-add-student-id');
-                            $('#'+bId).html('Thêm thành công');
+                            $('#'+bId).html('Đã thêm');
                         },
                         error: function(data) {
                             $('#'+bId).attr('class', 'btn btn-danger button-add-student-id');

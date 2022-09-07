@@ -26,8 +26,6 @@ class AuthController extends Controller
         if (auth()->attempt($request->only(['username', 'password']))) {
             Auth::login(auth()->user());
             if(auth()->user()->role_id === 3) {
-                $user = Teacher::where('user_id', auth()->user()->id)->first(['id','first_name','last_name','gender'])->toArray();
-                session()->put('user', $user);
                 return redirect()->route('manager.welcome');
             }else if(auth()->user()->role_id === 2) {
                 $user = Teacher::where('user_id', auth()->user()->id)->first(['id','first_name','last_name','gender'])->toArray();
@@ -36,7 +34,7 @@ class AuthController extends Controller
             }else if(auth()->user()->role_id === 1) {
                 $user = Student::where('user_id', auth()->user()->id)->first(['id','first_name','last_name','gender'])->toArray();
                 session()->put('user', $user);
-                return redirect()->route('student.welcome');
+                return redirect()->route('manager.welcome');
             }
         }
 

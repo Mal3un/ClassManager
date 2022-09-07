@@ -32,11 +32,13 @@
                                     @csrf
                                     <input id="class_id" type="hidden" name="class_id" value="{{$data->id}}">
                                     <button id="btn-point-list" type="submit" name="point_list" class="btn btn-primary">
-                                        Điểm danh lớp học
+                                        {{Auth::user()->role_id === 1 ? 'Xem thông tin điểm danh' : 'Điểm danh lớp học'}}
                                     </button>
-                                    <button id="btn-open-score" type="submit" name="score" class="btn btn-success">
-                                        Nhập điểm
-                                    </button>
+                                    @if(Auth::user()->role_id === 2 || Auth::user()->role_id === 3)
+                                        <button id="btn-open-score" type="submit" name="score" class="btn btn-success">
+                                            Nhập điểm
+                                        </button>
+                                    @endif
                                 </form>
                             </div>
                         </div>
@@ -134,6 +136,10 @@
                         class_id: class_id
                     },
                     success: async function(data) {
+                        let check = '';
+                        if($('#checkRoleUser').val() == 1){
+                            check='disabled';
+                        }
                         let text = ``;
                         let status1 = 0;
                         let status2 = 0;
@@ -170,39 +176,39 @@
                             if(each.status == 1) {
                                 text+=`
                                                     <td>
-                                                        <input type="radio" checked   id="check-${each.info.id}" name="id${each.info.id}" value="1">
+                                                        <input type="radio"  checked   id="check-${each.info.id}" name="id${each.info.id}" value="1">
                                                     </td>
                                                     <td>
-                                                        <input type="radio"  id="check-${each.info.id}" name="id${each.info.id}" value="2">
+                                                        <input type="radio" ${check}  id="check-${each.info.id}" name="id${each.info.id}" value="2">
                                                     </td>
                                                     <td>
-                                                        <input type="radio"  id="check-${each.info.id}" name="id${each.info.id}" value="3">
+                                                        <input type="radio" ${check}  id="check-${each.info.id}" name="id${each.info.id}" value="3">
                                                     </td>
                                                 `;
                             }
                             else if(each.status ==2) {
                                 text+=`
                                                         <td>
-                                                            <input type="radio"   id="check-${each.info.id}" name="id${each.info.id}" value="1">
+                                                            <input type="radio" ${check}   id="check-${each.info.id}" name="id${each.info.id}" value="1">
                                                         </td>
                                                         <td>
-                                                            <input type="radio" checked id="check-${each.info.id}" name="id${each.info.id}" value="2">
+                                                            <input type="radio"  checked id="check-${each.info.id}" name="id${each.info.id}" value="2">
                                                         </td>
                                                         <td>
-                                                            <input type="radio"  id="check-${each.info.id}" name="id${each.info.id}" value="3">
+                                                            <input type="radio" ${check}  id="check-${each.info.id}" name="id${each.info.id}" value="3">
                                                         </td>
                                                     `;
                             }
                             else if(each.status ==3) {
                                 text+=`
 :                                                           <td>
-                                                                <input type="radio"   id="check-${each.info.id}" name="id${each.info.id}" value="1">
+                                                                <input type="radio"  ${check}  id="check-${each.info.id}" name="id${each.info.id}" value="1">
                                                             </td>
                                                             <td>
-                                                                <input type="radio"  id="check-${each.info.id}" name="id${each.info.id}" value="2">
+                                                                <input type="radio" ${check}  id="check-${each.info.id}" name="id${each.info.id}" value="2">
                                                             </td>
                                                             <td>
-                                                                <input type="radio" checked  id="check-${each.info.id}" name="id${each.info.id}" value="3">
+                                                                <input type="radio"  checked  id="check-${each.info.id}" name="id${each.info.id}" value="3">
                                                             </td>
                                                         `;
                             }
@@ -442,6 +448,9 @@
         </script>
     @endpush
     <div id="modal-set-point-list" style="padding:20px" class="modal" tabindex="-1" role="dialog" style="background-color:rgba(0,0,0,0.5)">
+        @if(Auth::user()->role_id !== 2 && Auth::user()->role_id !==3)
+            <input type="hidden" id="checkRoleUser" value="1">
+        @endif
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
@@ -478,13 +487,16 @@
                             <span id="modal-list-point-status2"></span><br>
                             <span id="modal-list-point-status3"></span><br>
                         </div>
+
                         <div class="info-listpoint-status-session w-75">
-                            <textarea id="modal-list-point-note" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
+                            <textarea @if(Auth::user()->role === 1) readonly @endif id="modal-list-point-note" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
                         </div>
                     </div>
-                    <button type="submit" id="btn-update-point-list" class="">
+                    @if(Auth::user()->role_id === 2 || Auth::user()->role_id === 3)
+                        <button type="submit" id="btn-update-point-list" class="">
 
-                    </button>
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

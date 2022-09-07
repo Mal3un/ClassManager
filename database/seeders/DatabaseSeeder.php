@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
     {
 //        Student::factory(10)->create();
 //        Teacher::factory(10)->create();
-//        $this->call(RoleSeeder::class);
-//        $this->call(CourseSeeder::class);
-//        $this->call(MajorSeeder::class);
-//        $this->call(UserSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(CourseSeeder::class);
+        $this->call(MajorSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(StudentSeeder::class);
         $this->call(TeacherSeeder::class);
 //        $this->call(ClasseSeeder::class);

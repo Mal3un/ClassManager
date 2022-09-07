@@ -57,23 +57,27 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="input-group mb-3 w-15 mr-3">
-                                <label for="select-teacher">Giáo viên</label>
-                                <select class="custom-select select-filter-teacher" id="select-teacher" name="teacher" >
-                                    <option selected>All...</option>
-                                    @foreach($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}"
-                                                @if ((string)$teacher->id === $selectedTeacher) selected @endif>
-                                            {{$teacher->first_name}} {{$teacher->last_name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="float-right col">
-                                <a href="" id="btn-create-classe" class="btn btn-success float-right">
-                                    Thêm lớp học
-                                </a>
-                            </div>
+                            @if(auth()->user()->role_id === 3)
+                                <div class="input-group mb-3 w-15 mr-3">
+                                    <label for="select-teacher">Giáo viên</label>
+                                    <select class="custom-select select-filter-teacher" id="select-teacher" name="teacher" >
+                                        <option selected>All...</option>
+                                        @foreach($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}"
+                                                    @if ((string)$teacher->id === $selectedTeacher) selected @endif>
+                                                {{$teacher->first_name}} {{$teacher->last_name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+                            @if(auth()->user()->role_id === 3)
+                                <div class="float-right col">
+                                    <a href="" id="btn-create-classe" class="btn btn-success float-right">
+                                        Thêm lớp học
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -87,8 +91,10 @@
                             <th>Thời gian</th>
                             <th>Tên giáo viên</th>
                             <th style="width:10%">Quản lý</th>
-                            <th style="width:10%">Sửa</th>
-                            <th style="width:10%">Xóa</th>
+                            @if(auth()->user()->role_id === 3)
+                                <th style="width:10%">Sửa</th>
+                                <th style="width:10%">Xóa</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -144,21 +150,23 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td>
+                                @if(auth()->user()->role_id === 3)
+                                    <td>
 
-                                    <a href='' id="btn-edit-course" class="btn btn-primary">
-                                        <i>Edit</i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <form method="post" action=''>
-                                        @csrf
-                                        @method("DELETE")
-                                        <button type="submit" name="delete" class="btn btn-danger">
-                                            <i>Delete</i>
-                                        </button>
-                                    </form>
-                                </td>
+                                        <a href='' id="btn-edit-course" class="btn btn-primary">
+                                            <i>Edit</i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form method="post" action=''>
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" name="delete" class="btn btn-danger">
+                                                <i>Delete</i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
@@ -211,6 +219,7 @@
                                 major_id: $('#modal-major').val()
                             },
                             success: function(data){
+                                $('#modal-subject').html('');
                                 $.each(data, function(key, value){
                                     $('#modal-subject').append('<option value="'+value.id+'">'+value.name+'</option>');
                                 });

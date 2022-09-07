@@ -7,6 +7,7 @@
     use App\Http\Controllers\manager\DivisionController;
     use App\Http\Controllers\manager\DivisonStudentController;
     use App\Http\Controllers\SubjectController;
+    use App\Http\Controllers\TestController;
     use App\Models\Major;
     use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+    Route::get('/test', [TestController::class, 'test'])->name('test');
 
     Route::get('/{course}', [CourseController::class, 'info'])->name('courses.info');
     Route::get('/subject/getSubjectByMajor', [SubjectController::class, 'getSubjectByMajor'])->name('subject.getSubjectByMajor');
@@ -39,5 +42,6 @@ use Illuminate\Support\Facades\Route;
     Route::post('/classes/setScore', [ClasseController::class, 'setScore'])->name('classes.setScore');
 
     Route::post('/scheduleSt/Schedule', [StudentController::class, 'Schedule'])->name('scheduleSt.Schedule');
+
 
 

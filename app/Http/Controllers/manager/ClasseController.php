@@ -16,6 +16,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use mysql_xdevapi\Exception;
@@ -50,7 +51,13 @@ class ClasseController extends Controller
         $query = $this->model->clone()
             ->with(['major:id,name', 'teacher:id,first_name,last_name,gender,email', 'course:id,name','subject:id,name' ])
             ->latest();
-
+        if(Auth::user()->role_id === 2) {
+            $query->where('teacher_id', Teacher::query()->where('user_id',Auth::id())->first()->id);
+        }
+        if(Auth::user()->role_id === 1) {
+            $class_id = Score::query()->where('student_id', Student::query()->where('user_id',Auth::id())->first()->id)->pluck('classe_id');
+            $query->whereIn('id', $class_id);
+        }
         if($selectedClassType !== 'All...' && !empty($selectedClassType)){
             $query->where('class_type',  $selectedClassType);
         }
@@ -73,6 +80,7 @@ class ClasseController extends Controller
                 return $q->where('teacher_id',$selectedTeacher );
             });
         }
+
         $data = $query->paginate();
         $teacher = Teacher::query()
             ->get([
@@ -119,10 +127,10 @@ class ClasseController extends Controller
         try{
             $studentIds = listPoint::query()
                 ->where('session',$request->get('lesson'))
-                ->where('classe_id',$request->get('class_id'))->get(['students_id','status','note'])->toArray();
+                ->where('classe_id',$request->get('class_id'))->get(['student_id','status','note'])->toArray();
             $students = [];
             foreach($studentIds as $student){
-                $student['info'] = Student::find($student['students_id'])->toArray();
+                $student['info'] = Student::find($student['student_id'])->toArray();
                 $students[] = $student;
             }
             return $this->successResponse($students);
@@ -163,7 +171,7 @@ class ClasseController extends Controller
                 if($key === 0){
                     $note = $request->get('note');
                     ListPoint::query()
-                        ->where('students_id',$set[0])
+                        ->where('student_id',$set[0])
                         ->where('session',$lesson)
                         ->where('classe_id',$class)
                         ->update([
@@ -171,7 +179,7 @@ class ClasseController extends Controller
                         ]);
                 }
                 ListPoint::query()
-                    ->where('students_id',$set[0])
+                    ->where('student_id',$set[0])
                     ->where('session',$lesson)
                     ->where('classe_id',$class)
                     ->update([
@@ -326,12 +334,25 @@ class ClasseController extends Controller
     public function show($classeId)
     {
         $data = $this->model->findOrFail($classeId);
+        if(Auth::user()->role_id === 2){
+            $teacher_id = Teacher::query()->where('user_id',Auth::id())->first()->id;
+            if($data->teacher_id !== $teacher_id && auth()->user()->role_id !== 3){
+                return abort(403,'Bạn không có đủ quyền truy cập');
+            }
+        }
+        if(Auth::user()->role_id === 1){
+            $student_id = Student::query()->where('user_id',Auth::id())->first()->id;
+            $check = Score::query()->where('student_id',$student_id)->where('classe_id',$classeId)->first();
+            if(!$check){
+                return abort(403,'Bạn không có đủ quyền truy cập');
+            }
+        }
         $teacher = Teacher::query()->where('id', $data->teacher_id)->first();
-        $studentid= ListPoint::query()->where('classe_id', $classeId)->Where('session',1)->pluck('students_id');
+        $studentid= ListPoint::query()->where('classe_id', $classeId)->Where('session',1)->pluck('student_id');
         $students = [];
         foreach($studentid as $student){
             $student = Student::find($student);
-            $status = ListPoint::query()->where('students_id', $student->id)->where('classe_id', $classeId)->where('status', 1)->count();
+            $status = ListPoint::query()->where('student_id', $student->id)->where('classe_id', $classeId)->where('status', 1)->count();
             $student['status'] = $status;
             $students[] = $student;
         }
