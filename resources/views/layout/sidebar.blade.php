@@ -102,6 +102,12 @@
             <li class="side-nav-item">
                 <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
                     <i class="mdi mdi-book-open-page-variant"></i>
+                    <span> Nhập điểm cuối kì </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
+                    <i class="mdi mdi-book-open-page-variant"></i>
                     <span> Môn học </span>
                 </a>
             </li>
@@ -126,6 +132,32 @@
                     </li>
                     <li>
                         <a href="apps-ecommerce-orders.html">Khác</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="side-nav-title side-nav-item">Chức năng khác</li>
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class=" uil-chart-line"></i>
+                    <span> Thi học phần </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
+                    <li>
+                        <a href="{{route('manager.majors.index')}}">Tạo lịch thi</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class=" uil-chart-line"></i>
+                    <span> Tin tức </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
+                    <li>
+                        <a href="{{route('manager.posts.index')}}">Tạo tin tức</a>
                     </li>
                 </ul>
             </li>

@@ -6,6 +6,7 @@
     use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\manager\DivisionController;
     use App\Http\Controllers\manager\DivisonStudentController;
+    use App\Http\Controllers\manager\PostController;
     use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TestController;
     use App\Models\Major;
@@ -42,6 +43,10 @@ use Illuminate\Support\Facades\Route;
     Route::post('/classes/setScore', [ClasseController::class, 'setScore'])->name('classes.setScore');
 
     Route::post('/scheduleSt/Schedule', [StudentController::class, 'Schedule'])->name('scheduleSt.Schedule');
+
+    Route::post('/posts/preview', [PostController::class, 'preview'])->name('posts.preview');
+
+
 
 
 

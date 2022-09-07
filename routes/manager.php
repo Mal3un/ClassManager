@@ -5,6 +5,7 @@
     use App\Http\Controllers\manager\CourseController;
     use App\Http\Controllers\manager\DivisionController;
     use App\Http\Controllers\manager\DivisonStudentController;
+    use App\Http\Controllers\manager\PostController;
     use App\Http\Controllers\manager\StudentController;
     use App\Http\Controllers\manager\SubjectController;
     use App\Http\Controllers\manager\UserController;
@@ -23,7 +24,7 @@
     */
     Route::get('/', function () {
         return view('manager.index', [
-            'title' => 'Manager',
+            'title' => 'Home',
         ]);
     })->name('welcome');
 
@@ -109,6 +110,18 @@
     ], static function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::post('/changePassword', [UserController::class, 'changePassword'])->name('changePassword');
+
+    });
+
+    Route::group([
+        'as'     => 'posts.',
+        'prefix' => 'posts',
+    ], static function () {
+        Route::get('/', [PostController::class, 'index'])->name('index');
+        Route::get('/create', [PostController::class, 'create'])->name('create');
+        Route::post('/', [PostController::class, 'store'])->name('store');
+
+//        Route::post('/changePassword', [PostController::class, 'changePassword'])->name('changePassword');
 
     });
 
