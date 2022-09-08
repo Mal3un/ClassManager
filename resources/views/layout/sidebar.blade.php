@@ -4,10 +4,10 @@
     <!-- LOGO -->
     <a href="{{route('manager.welcome')}}" class="logo text-center logo-light">
                     <span class="logo-lg">
-                        <img src="assets/images/logo.png" alt="" height="16">
+                        <img src="{{asset('images/logo/logo.png')}}" alt="" height="64px">
                     </span>
         <span class="logo-sm">
-                        <img src="assets/images/logo_sm.png" alt="" height="16">
+                        <img src="{{asset('images/logo/logo_sm.png')}}" alt="" height="20">
                     </span>
     </a>
 

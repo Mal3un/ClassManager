@@ -21,6 +21,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="input-group mb-3 w-25 mr-3">
+                                <label for="select-status">Trạng thái </label>
+                                <select class="custom-select select-filter-role" id="select-status" name="select-status" >
+                                    <option selected>All...</option>
+                                    @foreach($status as $each => $value)
+                                        <option value="{{ $value }}"
+                                                @if ((string)$value === $selectedStatus) selected @endif>
+                                            {{$each }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="float-right">
                                 <a href="{{route('manager.posts.create')}}" id="btn-create-course" class="btn btn-success float-right">
                                     Tạo bài viết mới
@@ -30,15 +42,12 @@
                     </form>
                 </div>
                 <div class="card-body">
-                    <table class="table table-hover table-centered mb-0">
+                    <table class="table table-striped table-centered mb-0">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Hình ảnh</th>
-                            <th>Tiêu đề</th>
-                            <th style="width:40%">Nội dung</th>
-                            <th style="width:10%">Sửa</th>
-                            <th style="width:10%">Xóa</th>
+                            <th>Post</th>
+                            <th style="width:10%">Edit</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,27 +59,29 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img alt="post" width="100px" src="{{ $each->image }}">
-                                </td>
-                                <td>
-                                    {{ $each->title }}
-                                </td>
-                                <td>
-                                    {{ $each->content }}
-                                </td>
-                                <td>
-                                    <a href='' id="btn-edit-course" class="btn btn-primary">
-                                        <i>Edit</i>
+                                    <a href="{{route('manager.posts.detail',$each->id)}}">
+                                        <img alt="post" width="200px" src="{{asset($each->image )}}"><br><br>
+                                        {{ $each->title }}
                                     </a>
                                 </td>
                                 <td>
-                                    <form method="post" action=''>
-                                        @csrf
-                                        @method("DELETE")
-                                        <button type="submit" name="delete" class="btn btn-danger">
-                                            <i>Delete</i>
-                                        </button>
-                                    </form>
+                                    @if($each->status === 0)
+                                        <div class="d-flex justify-content-lg-center align-center mb-3">
+                                                <btn class="btn btn-success">Duyệt</btn>
+                                        </div>
+                                    @endif
+                                    <div class="d-flex w-100" style="border:1px solid #ccc;padding:10px">
+                                        <a style="margin-right:10px" href='' id="btn-edit-course" class="btn btn-primary">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </a>
+                                        <form method="post" action=''>
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" name="delete" class="btn btn-danger">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -89,6 +100,7 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             $('#select-post').select2();
+            $('#select-status').select2();
             $(document).ready(function() {
                 $('.select-filter-role').change(function(){
                     $('#form-filter').submit();

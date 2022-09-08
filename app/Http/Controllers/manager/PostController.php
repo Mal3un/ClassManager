@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\manager;
 
+use App\Enums\StatusPostEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
 use App\Models\Post;
@@ -27,15 +28,21 @@ class PostController extends Controller
     public function index(request $request)
     {
         $selectedPost = $request->get('select-post');
+        $selectedStatus = $request->get('select-status');
         $query = $this->model->clone();
         if($selectedPost !== 'All...' && $selectedPost !== null){
             ($query->where('title', $selectedPost));
         }
+        if($selectedStatus !== 'All...' && $selectedStatus !== null){
+            ($query->where('status', $selectedStatus));
+        }
         $data = $query->paginate();
-
+        $status = StatusPostEnum::asArray();
         return view("manager.$this->table.index",[
             'data' => $data,
             'selectedPost'=>$selectedPost,
+            'selectedStatus'=>$selectedStatus,
+            'status'=>$status
         ]);
     }
 
@@ -48,14 +55,28 @@ class PostController extends Controller
 
     public function store(request $request)
     {
-        dd($request->all());
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|string|max:255|unique:posts',
             'content' => 'required',
         ]);
-        $this->model->create($request->all());
-        return $this->redirectWithMessage('success', 'Create successfully');
+        $imageName = 'default.png';
+        if(request()->has('image')) {
+            $image = request()->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/post'), 'images/post/'.$imageName);
+        }
+
+        $arr = [
+            'title' => $request->get('title'),
+            'content' => $request->get('content'),
+            'image' => 'images/post/'.$imageName,
+            'user_id' => auth()->user()->id,
+            'status' => auth()->user()->role_id === 3 ? 1 : 0,
+        ];
+        $this->model->create($arr);
+        return redirect()->route("manager.$this->table.index");
     }
+
 
     public function preview(request $request) : JsonResponse
     {
@@ -63,11 +84,20 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
         ]);
-        return $this->responseSuccess($request->all());
-        return view("manager.$this->table.preview",[
-            'title'=>'Preview ' . $this->table,
-            'data' => $request->all(),
-        ]);
+        $file = $request->file('image');
 
+//        $image = $file->store('public/images/posts');
+        dd($file);
+//        dd($image);
+        return $this->responseSuccess($request->all());
+
+    }
+
+    public function detail($id)
+    {
+        $data = $this->model->find($id);
+        return view("manager.$this->table.detail",[
+            'data' => $data,
+        ]);
     }
 }

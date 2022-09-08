@@ -65,7 +65,7 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="{{auth()->user()->avatar}}" alt="avatar" class="rounded-circle">
+                    <img src="{{asset(auth()->user()->avatar)}}" alt="avatar" class="rounded-circle">
                 </span>
                 <span>
                     @if(auth()->user()->role_id === 1)

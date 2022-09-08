@@ -10,6 +10,7 @@
     use App\Http\Controllers\manager\SubjectController;
     use App\Http\Controllers\manager\UserController;
     use App\Http\Controllers\TeacherController;
+    use App\Models\Post;
     use Illuminate\Support\Facades\Route;
 
     /*
@@ -23,8 +24,10 @@
     |
     */
     Route::get('/', function () {
+        $post = Post::query()->where('status',1)->limit(6)->latest()->get();
         return view('manager.index', [
             'title' => 'Home',
+            'post' => $post
         ]);
     })->name('welcome');
 
@@ -119,9 +122,9 @@
     ], static function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
+        Route::get('postDetail/{id}', [PostController::class, 'detail'])->name('detail');
         Route::post('/', [PostController::class, 'store'])->name('store');
 
-//        Route::post('/changePassword', [PostController::class, 'changePassword'])->name('changePassword');
 
     });
 

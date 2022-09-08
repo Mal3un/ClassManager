@@ -45,6 +45,8 @@ use Illuminate\Support\Facades\Route;
     Route::post('/scheduleSt/Schedule', [StudentController::class, 'Schedule'])->name('scheduleSt.Schedule');
 
     Route::post('/posts/preview', [PostController::class, 'preview'])->name('posts.preview');
+    Route::post('/posts/upload_image', [PostController::class, 'upload_image'])->name('posts.upload_image');
+
 
 
 
