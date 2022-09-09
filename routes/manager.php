@@ -1,5 +1,6 @@
 <?php
 
+    use App\Http\Controllers\ExamController;
     use App\Http\Controllers\MajorController;
     use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\manager\CourseController;
@@ -9,6 +10,7 @@
     use App\Http\Controllers\manager\StudentController;
     use App\Http\Controllers\manager\SubjectController;
     use App\Http\Controllers\manager\UserController;
+    use App\Http\Controllers\ScoreController;
     use App\Http\Controllers\TeacherController;
     use App\Models\Post;
     use Illuminate\Support\Facades\Route;
@@ -123,9 +125,25 @@
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::get('postDetail/{id}', [PostController::class, 'detail'])->name('detail');
+        Route::get('postPublic/{id}', [PostController::class, 'publicPost'])->name('publicPost');
         Route::post('/', [PostController::class, 'store'])->name('store');
+    });
 
+
+    Route::group([
+        'as'     => 'exams.',
+        'prefix' => 'exams',
+    ], static function () {
+        Route::get('/', [ExamController::class, 'index'])->name('index');
+        Route::post('/store', [ExamController::class, 'store'])->name('store');
 
     });
 
+    Route::group([
+        'as'     => 'scores.',
+        'prefix' => 'scores',
+    ], static function () {
+        Route::get('/', [ScoreController::class, 'index'])->name('index');
+
+    });
 

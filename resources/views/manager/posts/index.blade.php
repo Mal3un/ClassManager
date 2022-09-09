@@ -21,6 +21,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @if(Auth::user()->role_id === 3 || Auth::user()->role_id === 2 )
                             <div class="input-group mb-3 w-25 mr-3">
                                 <label for="select-status">Trạng thái </label>
                                 <select class="custom-select select-filter-role" id="select-status" name="select-status" >
@@ -38,6 +39,7 @@
                                     Tạo bài viết mới
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -47,7 +49,9 @@
                         <tr>
                             <th>ID</th>
                             <th>Post</th>
-                            <th style="width:10%">Edit</th>
+                            @if(Auth::user()->role_id === 3)
+                                <th style="width:10%">Edit</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -60,14 +64,16 @@
                                 </td>
                                 <td>
                                     <a href="{{route('manager.posts.detail',$each->id)}}">
+                                        <h6 style="text-decoration: none;color:rgba(0,0,0,0.6);float:left;text-align:left;width:100%">{{$each->getDateConverted()}}, {{$each->getTimeConverted()}}</h6>
                                         <img alt="post" width="200px" src="{{asset($each->image )}}"><br><br>
                                         {{ $each->title }}
                                     </a>
                                 </td>
+                                @if(Auth::user()->role_id === 3)
                                 <td>
                                     @if($each->status === 0)
                                         <div class="d-flex justify-content-lg-center align-center mb-3">
-                                                <btn class="btn btn-success">Duyệt</btn>
+                                                <a href="{{route('manager.posts.publicPost',$each->id)}}" class="btn btn-success">Duyệt</a>
                                         </div>
                                     @endif
                                     <div class="d-flex w-100" style="border:1px solid #ccc;padding:10px">
@@ -83,6 +89,7 @@
                                         </form>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

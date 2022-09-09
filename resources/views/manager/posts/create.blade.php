@@ -60,8 +60,20 @@
                     },
                     callbacks: {
                         onImageUpload: function (files) {
-                            let img = $("<img>").attr({src: files[0].src , width: "100%"}); // << Add here img attributes !
-                            $('#summernote').summernote("insertNode", img[0]);
+                            console.log(files);
+                            if (!files.length) return;
+                            let file = files[0];
+                            // create FileReader
+                            let reader = new FileReader();
+                            reader.onloadend = function () {
+                                // when loaded file, img's src set datauri
+                                var img = $("<img>").attr({src: reader.result, width: "100%"}); // << Add here img attributes !
+                                $('#summernote').summernote("insertNode", img[0]);
+                            }
+
+                            if (file) {
+                                reader.readAsDataURL(file);
+                            }
 
                         },
                         onImageLinkInsert: function(url) {
@@ -141,13 +153,15 @@
                                 <div class="card-body text-center" style="position: relative;">
                                     <img class="image-preview" width="auto" height="200" alt="ảnh">
                                     <h4 style="color:black; font-weight:bold;" class="title-preview"></h4>
+                                    <h6 style="text-decoration: none;color:rgba(0,0,0,0.6);float:right;text-align:right">ngày..., giờ...</h6>
                                 </div>
                             </div> <!-- end card-->
                         </div>
                         <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1">
                             <div class="card">
                                 <div class="card-body text-center" style="position: relative;display: flex;flex-direction: column;justify-content: center;align-items: center;">
-                                    <h4 style="color:black; font-weight:bold;" class="title-preview"></h4>
+                                    <h6 style="text-decoration: none;color:rgba(0,0,0,0.6);float:right;text-align:right">ngày... , giờ...</h6>
+                                    <h3 style="color:black; font-weight:bold;margin-bottom:10px" class="title-preview"></h3>
                                     <img class="image-preview" width="auto" height="400" alt="ảnh">
                                     <br>
                                     <div class="content-preview" style="width:70%;text-align:justify"></div>

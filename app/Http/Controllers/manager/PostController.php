@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -33,10 +34,14 @@ class PostController extends Controller
         if($selectedPost !== 'All...' && $selectedPost !== null){
             ($query->where('title', $selectedPost));
         }
-        if($selectedStatus !== 'All...' && $selectedStatus !== null){
-            ($query->where('status', $selectedStatus));
+        if(Auth::user()->role_id !== 3){
+            $query->where('status', '=',1);
+        }else{
+            if($selectedStatus !== 'All...' && $selectedStatus !== null){
+                ($query->where('status', $selectedStatus));
+            }
         }
-        $data = $query->paginate();
+        $data = $query->latest()->paginate();
         $status = StatusPostEnum::asArray();
         return view("manager.$this->table.index",[
             'data' => $data,
@@ -99,5 +104,12 @@ class PostController extends Controller
         return view("manager.$this->table.detail",[
             'data' => $data,
         ]);
+    }
+
+    public function publicPost($id){
+        $data = $this->model->find($id);
+        $data->status = 1;
+        $data->save();
+        return redirect()->route("manager.$this->table.index");
     }
 }

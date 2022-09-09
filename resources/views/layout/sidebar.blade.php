@@ -43,6 +43,9 @@
                         <li>
                             <a href="{{route('manager.students.schedule')}}">Xem lịch học của sinh viên</a>
                         </li>
+                            <li>
+                                <a href="{{route('manager.scores.index')}}">Xem điểm của sinh viên</a>
+                            </li>
                     </ul>
                 </li>
             @endif
@@ -98,13 +101,13 @@
                         </li>
                     </ul>
                 </li>
+                <li class="side-nav-item">
+                    <a href="{{route('manager.scores.index')}}" class="side-nav-link">
+                        <i class="uil-pen"></i>
+                        <span> Nhập điểm cuối kì </span>
+                    </a>
+                </li>
             @endif
-            <li class="side-nav-item">
-                <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
-                    <i class="mdi mdi-book-open-page-variant"></i>
-                    <span> Nhập điểm cuối kì </span>
-                </a>
-            </li>
             <li class="side-nav-item">
                 <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
                     <i class="mdi mdi-book-open-page-variant"></i>
@@ -138,26 +141,34 @@
             <li class="side-nav-title side-nav-item">Chức năng khác</li>
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
-                    <i class=" uil-chart-line"></i>
+                    <i class=" uil-monitor-heart-rate"></i>
                     <span> Thi học phần </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
                     <li>
-                        <a href="{{route('manager.majors.index')}}">Tạo lịch thi</a>
+                        @if(auth()->user()->role_id === 3)
+                            <a href="{{route('manager.exams.index')}}">Tạo lịch thi</a>
+                        @else
+                            <a href="{{route('manager.exams.index')}}">Xem lịch thi</a>
+                        @endif
                     </li>
                 </ul>
             </li>
 
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
-                    <i class=" uil-chart-line"></i>
+                    <i class="uil-newspaper"></i>
                     <span> Tin tức </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
                     <li>
-                        <a href="{{route('manager.posts.index')}}">Tạo tin tức</a>
+                        @if(auth()->user()->role_id === 3)
+                            <a href="{{route('manager.posts.index')}}">Tạo tin tức</a>
+                        @else
+                            <a href="{{route('manager.posts.index')}}">Tất cả tin tức</a>
+                        @endif
                     </li>
                 </ul>
             </li>

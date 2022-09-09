@@ -21,11 +21,13 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="float-right col">
-                                    <a href="" id="btn-create-course" class="btn btn-success float-right">
-                                        Thêm khóa học
-                                    </a>
-                                </div>
+                                @if(Auth::user()->role_id === 3)
+                                    <div class="float-right col">
+                                        <a href="" id="btn-create-course" class="btn btn-success float-right">
+                                            Thêm khóa học
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </form>
                 </div>
@@ -36,8 +38,10 @@
                             <th>Tên Khóa</th>
                             <th>Mã Khóa</th>
                             <th>Thời gian bắt đầu </th>
-                            <th style="width:10%">Sửa</th>
-                            <th style="width:10%">Xóa</th>
+                            @if(Auth::user()->role_id === 3)
+                                <th style="width:10%">Sửa</th>
+                                <th style="width:10%">Xóa</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +58,7 @@
                                 <td>
                                     {{ $each->duration }}
                                 </td>
+                                @if(Auth::user()->role_id ===3)
                                 <td>
                                     <a href='{{route("manager.$table.edit",$each)}}' id="btn-edit-course" class="btn btn-primary">
                                         <i>Edit</i>
@@ -68,6 +73,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

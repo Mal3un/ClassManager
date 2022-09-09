@@ -17,4 +17,15 @@ class Post extends Model
         'link',
         'status',
     ];
+
+    public function getDateConverted(){
+        $date = date("d-m-Y", strtotime($this->created_at));
+        return $date;
+    }
+
+    public function getTimeConverted()
+    {
+        $time = date("H:i", strtotime($this->created_at));
+        return $time;
+    }
 }

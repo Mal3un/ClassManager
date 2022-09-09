@@ -21,7 +21,7 @@
 
                             <div class="card text-center">
                                 <div class="card-body">
-                                    <img src="{{Auth::user()->avatar}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                                    <img src="{{asset(Auth::user()->avatar)}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
                                     <h4 class="mb-0 mt-2">{{$info['name']}}</h4>
                                     <p class="text-muted font-14">{{$info['role']}}</p>

@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function login(request $request)
     {
-        return view('auth.login');
+        $message = $request->get('errors');
+
+        return view('auth.login', [
+            'message' => $message ?? null
+        ]);
     }
 
     public function authCheck(Request $request)
@@ -38,7 +42,7 @@ class AuthController extends Controller
             }
         }
 
-        return redirect()->route('login')->withErrors(['message' => 'Invalid credentials']);
+        return redirect()->route('login', ['errors' => 'Sai tài khoản hoặt mật khẩu']);
     }
 
     public function logout(Request $request): RedirectResponse

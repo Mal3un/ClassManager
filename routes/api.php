@@ -2,11 +2,13 @@
 
     use App\Http\Controllers\api\StudentController;
     use App\Http\Controllers\CourseController;
+    use App\Http\Controllers\ExamController;
     use App\Http\Controllers\MajorController;
     use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\manager\DivisionController;
     use App\Http\Controllers\manager\DivisonStudentController;
     use App\Http\Controllers\manager\PostController;
+    use App\Http\Controllers\ScoreController;
     use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TestController;
     use App\Models\Major;
@@ -46,6 +48,13 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('/posts/preview', [PostController::class, 'preview'])->name('posts.preview');
     Route::post('/posts/upload_image', [PostController::class, 'upload_image'])->name('posts.upload_image');
+
+
+    Route::post('/exams/getSubject', [ExamController::class, 'getSubject'])->name('exams.getSubject');
+
+    Route::post('/scores/updateLastScore', [ScoreController::class, 'updateLastScore'])->name('scores.updateLastScore');
+
+
 
 
 

@@ -33,11 +33,13 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @if(Auth::user()->role_id === 3)
                             <div class="float-right col">
                                 <a href="" id="btn-create-classe" class="btn btn-success float-right">
                                     Tạo môn học
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -49,8 +51,10 @@
                             <th>Tên môn học</th>
                             <th>Thông tin môn học</th>
                             <th>Chuyên ngành</th>
+                            @if(Auth::user()->role_id === 3)
                             <th style="width:10%">Sửa</th>
                             <th style="width:10%">Xóa</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -74,6 +78,7 @@
                                 <td>
                                     <span style="color:black">{{$each->major_name}}  </span>
                                 </td>
+                                @if(Auth::user()->role_id === 3)
                                 <td>
                                     <a href='' id="btn-edit-course" class="btn btn-primary">
                                         <i>Edit</i>
@@ -88,6 +93,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
