@@ -11,6 +11,7 @@ use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class TeacherController extends Controller
@@ -51,11 +52,21 @@ class TeacherController extends Controller
             'selectedTeacher' => $selectedTeacher,
         ]));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+    public function schedule(){
+        if(Auth::user()->role_id === 3){
+            $teachers = Teacher::all();
+        }
+        else{
+            $teachers = Teacher::query()->where('user_id', Auth::id())->first()->id;
+        }
+        return view('manager.teachers.schedule',[
+            'title' => 'Schedule',
+            'teachers' => $teachers
+        ]);
+    }
+
     public function create()
     {
         //

@@ -47,13 +47,22 @@
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Thay đổi mật khẩu</h5>
                                 <div class="text-center d-flex flex-column center-flex align-items-center">
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" id="oldPass" name="oldPass" placeholder="Nhập mật khẩu hiện tại">
+                                        <div class="form-group mb-3">
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" id="oldPass" name="oldPass" placeholder="Nhập mật khẩu hiện tại">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" id="newPass" name="newPass" placeholder="Nhập mật khẩu mới">
+                                        <div class="form-group mb-3">
+                                            <div class="input-group input-group-merge">
+                                                <input type="password" class="form-control" id="newPass" name="newPass" placeholder="Nhập mật khẩu mới">
+                                                <div class="input-group-append" data-password="false">
+                                                    <div class="input-group-text">
+                                                        <span class="password-eye"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div> <!-- end col -->
                                     <div class="col-md-4">

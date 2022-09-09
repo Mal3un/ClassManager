@@ -1,6 +1,7 @@
 <?php
 
     use App\Http\Controllers\api\StudentController;
+    use App\Http\Controllers\api\TeacherController;
     use App\Http\Controllers\CourseController;
     use App\Http\Controllers\ExamController;
     use App\Http\Controllers\MajorController;
@@ -45,6 +46,8 @@ use Illuminate\Support\Facades\Route;
     Route::post('/classes/setScore', [ClasseController::class, 'setScore'])->name('classes.setScore');
 
     Route::post('/scheduleSt/Schedule', [StudentController::class, 'Schedule'])->name('scheduleSt.Schedule');
+    Route::post('/scheduleTc/Schedule', [TeacherController::class, 'Schedule'])->name('scheduleTc.Schedule');
+
 
     Route::post('/posts/preview', [PostController::class, 'preview'])->name('posts.preview');
     Route::post('/posts/upload_image', [PostController::class, 'upload_image'])->name('posts.upload_image');

@@ -98,6 +98,7 @@
         'prefix' => 'teachers',
     ], static function () {
         Route::get('/', [TeacherController::class, 'index'])->name('index');
+        Route::get('/schedule', [TeacherController::class, 'schedule'])->name('schedule');
     });
     Route::group([
         'as'     => 'subjects.',

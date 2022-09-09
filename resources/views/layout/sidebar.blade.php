@@ -66,7 +66,7 @@
                             <a href="{{route('manager.division.index')}}">Danh sách phần công</a>
                         </li>
                         <li>
-                            <a href="{{route('manager.division.index')}}">Xem lịch dậy của giáo viên</a>
+                            <a href="{{route('manager.teachers.schedule')}}">Xem lịch dậy của giáo viên</a>
                         </li>
                     </ul>
                 </li>
