@@ -151,7 +151,7 @@
                         <div class="col-xl-3 col-lg-6 order-lg-1">
                             <div class="card">
                                 <div class="card-body text-center" style="position: relative;">
-                                    <img class="image-preview" width="auto" height="200" alt="ảnh">
+                                    <img class="image-preview" width="auto" style="width: 100%" alt="ảnh">
                                     <h4 style="color:black; font-weight:bold;" class="title-preview"></h4>
                                     <h6 style="text-decoration: none;color:rgba(0,0,0,0.6);float:right;text-align:right">ngày..., giờ...</h6>
                                 </div>
@@ -162,7 +162,7 @@
                                 <div class="card-body text-center" style="position: relative;display: flex;flex-direction: column;justify-content: center;align-items: center;">
                                     <h6 style="text-decoration: none;color:rgba(0,0,0,0.6);float:right;text-align:right">ngày... , giờ...</h6>
                                     <h3 style="color:black; font-weight:bold;margin-bottom:10px" class="title-preview"></h3>
-                                    <img class="image-preview" width="auto" height="400" alt="ảnh">
+                                    <img class="image-preview" width="auto" style="width: 100%" alt="ảnh">
                                     <br>
                                     <div class="content-preview" style="width:70%;text-align:justify"></div>
                                 </div>

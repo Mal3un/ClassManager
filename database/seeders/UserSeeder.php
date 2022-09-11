@@ -21,14 +21,14 @@ class UserSeeder extends Seeder
             'username'=>'10',
             'password'=>bcrypt('10'),
             'role_id'=>3,
-            'avatar'=> asset("images/avatar/role3.png")
+            'avatar'=> "images/avatar/role3.png"
         ];
 
         for($i = 1; $i <= 16; $i++){
             $arr[] = [
                 'username' => 100+$i,
                 'password' => bcrypt(100+$i),
-                'avatar'=> asset("images/avatar/role2.png"),
+                'avatar'=> "images/avatar/role2.png",
                 'role_id' => 2,
             ];
         }
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             $arr[] = [
                 'username' => 100100 + $i,
                 'password' => bcrypt(100100 + $i),
-                'avatar'=> asset("images/avatar/role1.png"),
+                'avatar'=> "images/avatar/role1.png",
                 'role_id' => 1,
             ];
         }
