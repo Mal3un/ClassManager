@@ -10,7 +10,7 @@
                         <form id="form-filter">
                             <div class="form-group d-flex">
                                 <div class="input-group mb-3 w-25 mr-3">
-                                    <label for="select-course">Khóa học</label>
+                                    <label for="select-course">Khoa học</label>
                                     <select class="custom-select select-filter-role" id="select-course" name="courseName" >
                                         <option selected>All...</option>
                                         @foreach($courseNames as $courseName => $value)
@@ -38,6 +38,8 @@
                             <th>Tên Khóa</th>
                             <th>Mã Khóa</th>
                             <th>Thời gian bắt đầu </th>
+
+                            <th>Thoi gian ket thuc</th>
                             @if(Auth::user()->role_id === 3)
                                 <th style="width:10%">Sửa</th>
                                 <th style="width:10%">Xóa</th>

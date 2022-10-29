@@ -22,18 +22,18 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="input-group mb-3 w-15 mr-3">
-                                    <label for="select-course">Khóa</label>
-                                    <select class="custom-select select-filter-role" id="select-course" name="courseName" >
-                                        <option selected>All...</option>
-                                        @foreach($courses as $course)
-                                            <option value="{{ $course->id }}"
-                                                    @if ((string)$course->id === $selectedCourse) selected @endif>
-                                                {{$course->name}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+{{--                                <div class="input-group mb-3 w-15 mr-3">--}}
+{{--                                    <label for="select-course">Khóa</label>--}}
+{{--                                    <select class="custom-select select-filter-role" id="select-course" name="courseName" >--}}
+{{--                                        <option selected>All...</option>--}}
+{{--                                        @foreach($courses as $course)--}}
+{{--                                            <option value="{{ $course->id }}"--}}
+{{--                                                    @if ((string)$course->id === $selectedCourse) selected @endif>--}}
+{{--                                                {{$course->name}}--}}
+{{--                                            </option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
                             @endif
                             <div class="input-group mb-3 w-15 mr-3">
                                 <label for="select-subject">Môn học</label>

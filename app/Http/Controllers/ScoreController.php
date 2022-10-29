@@ -43,10 +43,10 @@ class ScoreController extends Controller
             $student = Student::query()->get(['id', 'first_name', 'last_name']);
             $query = $this->model->clone()
                 ->latest();
-            if($selectedCourse !== 'All...' && $selectedCourse !== null){
-                $subject = subject::query()->where('course_id', $selectedCourse)->get(['id', 'name','number_credits']);
-                $student = Student::query()->where('course_id', $selectedCourse)->get(['id', 'first_name', 'last_name']);
-            }
+//            if($selectedCourse !== 'All...' && $selectedCourse !== null){
+//                $subject = subject::query()->where('course_id', $selectedCourse)->get(['id', 'name','number_credits']);
+//                $student = Student::query()->where('course_id', $selectedCourse)->get(['id', 'first_name', 'last_name']);
+//            }
             if($selectedMajor !== 'All...' && $selectedMajor !== null){
                 $subject = subject::query()->where('major_id', $selectedMajor)->get(['id', 'name','number_credits']);
                 $student = Student::query()->where('major_id', $selectedMajor)->get(['id', 'first_name', 'last_name']);
