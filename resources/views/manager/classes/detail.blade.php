@@ -382,7 +382,7 @@
                             $('#modal-set-point_list').html('');
                             loadingInfoListPoint();
                             $('#btn-update-point-list').html('Đã cập nhật');
-                            $('#btn-update-point-list').attr('class','btn btn-success float-right mt-3');
+                            $('#btn-update-point-list').attr('class','btn btn-success float-right');
                         },
                         error: function(data) {
                             $.toast(
