@@ -178,6 +178,7 @@
                     </li>
                 </ul>
             </li>
+<<<<<<< HEAD
 
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
@@ -195,6 +196,23 @@
                     </li>
                 </ul>
             </li>
+=======
+            @if(auth()->user()->role_id === 3)
+                <li class="side-nav-item">
+                    <a href="javascript: void(0);" class="side-nav-link">
+                        <i class="uil-chart"></i>
+                        <span> Thống kê </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
+                        <li>
+                            <a href="{{route('manager.charts.index')}}">Xem thống kê điểm số</a>
+{{--                               <a href="{{route('manager.posts.index')}}">Xem thông kê học tập</a>--}}
+                        </li>
+                    </ul>
+                </li>
+            @endif
+>>>>>>> refs/remotes/origin/main
         </ul>
     </div>
     <!-- Sidebar -left -->

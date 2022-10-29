@@ -4,7 +4,8 @@
     use App\Http\Controllers\api\TeacherController;
     use App\Http\Controllers\CourseController;
     use App\Http\Controllers\ExamController;
-    use App\Http\Controllers\MajorController;
+use App\Http\Controllers\ListPointController;
+use App\Http\Controllers\MajorController;
     use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\manager\DivisionController;
     use App\Http\Controllers\manager\DivisonStudentController;
@@ -57,6 +58,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('/scores/updateLastScore', [ScoreController::class, 'updateLastScore'])->name('scores.updateLastScore');
 
+    Route::post ('/listpoint/import', [ListPointController::class, 'import'])->name('listpoint.import');
 
 
 

@@ -83,7 +83,7 @@ class DivisonStudentController extends Controller
         }else if($selectedMajor === 'All...' && empty($selectedMajor) && ($selectedCourse !== 'All...' && !empty($selectedCourse))){
             $student = $student->where('major_id', $selectedMajor);
         }
-        return (view('manager.divisionstudent.index', [
+        return (view('manager.divisionStudent.index', [
             'title' => 'Students',
             'classes' => $classes,
             'data' => $data,

@@ -341,7 +341,7 @@
                         loadingInfoListPoint();
                         $('#modal-set-point-list').modal('show');
                         $('#btn-update-point-list').html('Cập nhật');
-                        $('#btn-update-point-list').attr('class','btn btn-primary float-right mt-3 ');
+                        $('#btn-update-point-list').attr('class','btn btn-primary float-right ');
                     }
                 });
                 $('#btn-open-score').on('click', function(e) {
@@ -444,6 +444,60 @@
                         }
                     })
                 })
+                $('#btn-submit-with-file').click(function() {
+                    $('#file_listpoint').click();
+                });
+                $('#file_listpoint').change(function() {
+                    let file = $('#file_listpoint')[0].files[0];
+                    let formData = new FormData();
+                    formData.append('file', file);
+                   $.ajax({
+                          url: '{{route('api.listpoint.import')}}',
+                          type: 'POST',
+                          data: formData,
+                          processData: false,
+                          contentType: false,
+                            csrf: true,
+                          success: function(data) {
+                              let $info = data.data;
+                              let $body = $('#modal-set-point_list');
+                              Object.keys($info).forEach($key => {
+                                  $index = $key - 1;
+                                  $tr = $body.children().eq($index);
+                                  if ($info[$key] === 1) {
+                                      $tr.children().eq(4).children().eq(0).prop('checked', true);
+                                  } else if ($info[$key] === 2) {
+                                      $tr.children().eq(5).children().eq(0).prop('checked', true);
+                                  } else {
+                                      $tr.children().eq(6).children().eq(0).prop('checked', true);
+                                  }
+                              });
+                            $.toast(
+                                 {
+                                      heading: 'Thành công',
+                                      text: 'Nhập điểm danh thành công',
+                                      showHideTransition: 'fade',
+                                      icon: 'success',
+                                      position: 'top-right',
+                                      hideAfter: 5000
+                                 },
+                            );
+
+                          },
+                          error: function(data) {
+                            $.toast(
+                                 {
+                                      heading: 'Lỗi',
+                                      text: 'Có lỗi xảy ra',
+                                      showHideTransition: 'fade',
+                                      icon: 'error',
+                                      position: 'top-right',
+                                      hideAfter: 5000
+                                 }
+                            );
+                          }
+                     });
+                   });
             });
         </script>
     @endpush
@@ -455,11 +509,8 @@
             <div class="modal-content ">
                 <div class="modal-header">
                     <h5 id="modal-title-session" class="modal-title"></h5>
-                    <button type="button" onclick="hidemodel('modal-set-point-list')" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
-                <div class="modal-body ">
+                <div class="modal-body">
                     <form id="form-set-point-list" action="">
                         <table class="table table-hover table-centered mb-0">
                             <thead>
@@ -493,6 +544,10 @@
                         </div>
                     </div>
                     @if(Auth::user()->role_id === 2 || Auth::user()->role_id === 3)
+                        <input type="file"  name="file_listpoint" id="file_listpoint"  style="width:0; height: 0">
+                        <button type="submit" id="btn-submit-with-file" class="btn btn-info">
+                            <i class="mdi mdi-file-excel"></i> Điểm danh bằng files
+                        </button>
                         <button type="submit" id="btn-update-point-list" class="">
 
                         </button>
