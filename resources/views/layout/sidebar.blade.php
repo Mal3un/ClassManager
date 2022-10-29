@@ -178,8 +178,6 @@
                     </li>
                 </ul>
             </li>
-<<<<<<< HEAD
-
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class="uil-newspaper"></i>
@@ -196,7 +194,6 @@
                     </li>
                 </ul>
             </li>
-=======
             @if(auth()->user()->role_id === 3)
                 <li class="side-nav-item">
                     <a href="javascript: void(0);" class="side-nav-link">
@@ -212,7 +209,6 @@
                     </ul>
                 </li>
             @endif
->>>>>>> refs/remotes/origin/main
         </ul>
     </div>
     <!-- Sidebar -left -->
