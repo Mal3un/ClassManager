@@ -110,6 +110,12 @@
             @endif
             <li class="side-nav-item">
                 <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
+                    <i class=" mdi mdi-image-auto-adjust"></i>
+                    <span> Đăng ký tín chỉ </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{route('manager.subjects.index')}}" class="side-nav-link">
                     <i class="mdi mdi-book-open-page-variant"></i>
                     <span> Môn học </span>
                 </a>
@@ -168,6 +174,23 @@
                             <a href="{{route('manager.posts.index')}}">Tạo tin tức</a>
                         @else
                             <a href="{{route('manager.posts.index')}}">Tất cả tin tức</a>
+                        @endif
+                    </li>
+                </ul>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class="uil-newspaper"></i>
+                    <span> Tín chỉ </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level mm-collapse " aria-expanded="false" style="">
+                    <li>
+                        @if(auth()->user()->role_id === 3)
+                            <a href="{{route('manager.posts.index')}}">Tạo đợt đăng ký tín chỉ</a>
+                        @else
+                            <a href="{{route('manager.posts.index')}}">Đăng ký tín chỉ</a>
                         @endif
                     </li>
                 </ul>
