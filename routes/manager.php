@@ -1,7 +1,8 @@
 <?php
 
     use App\Http\Controllers\ExamController;
-    use App\Http\Controllers\MajorController;
+use App\Http\Controllers\ListPointController;
+use App\Http\Controllers\MajorController;
     use App\Http\Controllers\manager\ClasseController;
     use App\Http\Controllers\manager\CourseController;
     use App\Http\Controllers\manager\DivisionController;
@@ -147,4 +148,12 @@
         Route::get('/', [ScoreController::class, 'index'])->name('index');
 
     });
+
+Route::group([
+    'as'     => 'charts.',
+    'prefix' => 'charts',
+], static function () {
+    Route::get('/', [\App\Http\Controllers\ChartController::class, 'point'])->name('index');
+
+});
 
