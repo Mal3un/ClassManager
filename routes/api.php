@@ -46,8 +46,8 @@ use Illuminate\Support\Facades\Route;
     Route::post('/classes/score', [ClasseController::class, 'score'])->name('classes.score');
     Route::post('/classes/setScore', [ClasseController::class, 'setScore'])->name('classes.setScore');
 
-    Route::post('/scheduleSt/Schedule', [StudentController::class, 'Schedule'])->name('scheduleSt.Schedule');
-    Route::post('/scheduleTc/Schedule', [TeacherController::class, 'Schedule'])->name('scheduleTc.Schedule');
+    Route::post('/scheduleSt/Schedule', [StudentController::class, 'Schedule'])->name('schedule.Schedule');
+    Route::post('/scheduleTc/Schedule', [StudentController::class, 'Schedule'])->name('schedule.Schedule');
 
 
     Route::post('/posts/preview', [PostController::class, 'preview'])->name('posts.preview');

@@ -120,10 +120,10 @@
                         $('#sunday-t'+i).attr('style','');
                     }
                     $.ajax({
-                        url: '{{ route('api.scheduleTc.Schedule') }}',
+                        url: '{{ route('api.schedule.Schedule') }}',
                         type: 'POST',
                         data: {
-                            teacher: $(this).val(),
+                            user: $(this).val(),
                         },
                         success: function(data) {
                             let style = 'background-color: lightgreen; color: #0c0c0c; cursor: pointer; font-weight: 550;';
