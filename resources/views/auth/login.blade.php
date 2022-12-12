@@ -4,10 +4,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('images/logo/logo_sm.png')}}" />
+    <link rel="icon" type="image/png" href="{{asset('images/logo/logo_sm.png')}}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Material Dashboard Pro by Creative Tim</title>
+    <title>Classmanager, platform management creat by LMD </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href=" ">School Manager </a>
+            <a class="navbar-brand" href=" ">PKA Manager </a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -54,7 +54,7 @@
     </div>
 </nav>
 <div class="wrapper wrapper-full-page">
-    <div class="full-page login-page" filter-color="black" data-image="{{asset('images/auth/login.jpg')}}">
+    <div class="full-page login-page" filter-color="gray" data-image="{{asset('images/logo/login.jpg')}}">
         <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
         <div class="content">
             <div class="container">
@@ -65,17 +65,17 @@
                             <div class="card card-login card-hidden">
                                 <div class="card-header text-center" data-background-color="rose">
                                     <h4 class="card-title">Login</h4>
-                                    <div class="social-line">
-                                        <a href="#btn" class="btn btn-just-icon btn-simple">
-                                            <i class="fa fa-facebook-square"></i>
-                                        </a>
-                                        <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="#eugen" class="btn btn-just-icon btn-simple">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                    </div>
+{{--                                    <div class="social-line">--}}
+{{--                                        <a href="#btn" class="btn btn-just-icon btn-simple">--}}
+{{--                                            <i class="fa fa-facebook-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <a href="#pablo" class="btn btn-just-icon btn-simple">--}}
+{{--                                            <i class="fa fa-twitter"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <a href="#eugen" class="btn btn-just-icon btn-simple">--}}
+{{--                                            <i class="fa fa-google-plus"></i>--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
                                 </div>
                                  @if(isset($message))
                                     <p class="category text-center" style="color:red">
@@ -114,38 +114,39 @@
         <footer class="footer">
             <div class="container">
                 <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portofolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Blog
-                            </a>
-                        </li>
-                    </ul>
+{{--                    <ul>--}}
+{{--                        <li>--}}
+{{--                            <a href="#">--}}
+{{--                                Home--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a href="#">--}}
+{{--                                Company--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a href="#">--}}
+{{--                                Portofolio--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a href="#">--}}
+{{--                                Blog--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
                 </nav>
                 <p class="copyright pull-right">
                     &copy;
                     <script>
                         document.write(new Date().getFullYear())
                     </script>
-                    <a href="http://www.creative-tim.com"> Creative Tim </a>, made with love for a better web
+                    <a href=""> Creative LMD </a>, made with love for a better web
                 </p>
             </div>
         </footer>
+        <div class="full-page-background" style="background-image: url({{asset('images/logo/login.jpg')}}) "></div>
     </div>
 </div>
 </body>

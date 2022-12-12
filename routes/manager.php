@@ -63,6 +63,7 @@ use App\Http\Controllers\MajorController;
 //        Route::get('/create', [CourseController::class, 'create'])->name('create');
         Route::post('/store', [ClasseController::class, 'store'])->name('store');
         Route::post('point_list/{id}', [ClasseController::class, 'point_list'])->name('point_list');
+        Route::delete('/destroy/{classid}', [ClasseController::class, 'destroy'])->name('destroy');
         Route::post('/{classId}', [ClasseController::class, 'show'])->name('show');
 
 //        Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');

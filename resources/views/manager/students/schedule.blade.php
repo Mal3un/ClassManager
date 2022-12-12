@@ -124,6 +124,7 @@
                         type: 'POST',
                         data: {
                             user: $(this).val(),
+                            type: '1',
                         },
                         success: function(data) {
                             let style = 'background-color: lightgreen; color: #0c0c0c; cursor: pointer; font-weight: 550;';
@@ -226,10 +227,11 @@
                         $('#sunday-t'+i).attr('style','');
                     }
                     $.ajax({
-                        url: '{{ route('api.scheduleSt.Schedule') }}',
+                        url: '{{ route('api.schedule.Schedule') }}',
                         type: 'POST',
                         data: {
-                            student: $('#student_id').val(),
+                            user: $(this).val(),
+                            type: '1',
                         },
                         success: function(data) {
                             let style = 'background-color: lightgreen; color: #0c0c0c; cursor: pointer; font-weight: 550;';

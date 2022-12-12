@@ -13,7 +13,6 @@ class StudentFactory extends ScheduleFactory
 {
     public function getSchedule()
     {
-        try{
             $student = Student::find($this->user)->only('first_name', 'last_name','birthdate','gender','major_id','course_id');
             $student['birthdate'] = date('d/m/Y', strtotime($student['birthdate']));
             $student['major'] = Major::find($student['major_id'])->name;
@@ -36,10 +35,7 @@ class StudentFactory extends ScheduleFactory
                     }
                 }
             }
-            return $this->successResponse([$arr,$studentinfo]);
-        }catch(Exception $e){
-            return $this->errorResponse($e->getMessage(),500);
-        }
+            return [$arr,$studentinfo];
     }
 
 }

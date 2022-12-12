@@ -158,7 +158,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form method="post" action=''>
+                                        <form method="post" action='{{route('manager.classes.destroy',$each->id)}}'>
                                             @csrf
                                             @method("DELETE")
                                             <button type="submit" name="delete" class="btn btn-danger">

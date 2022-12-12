@@ -43,11 +43,17 @@ class StudentController extends Controller
 
     public function Schedule(request $request) : JsonResponse
     {
-        dd($request->user);
-        if(auth()->user()->role_id == 1){
+        if($request->type == 1){
             $schedule = new StudentFactory($request->user);
-        }else if(auth()->user()->role_id == 2){
+        }else if($request->type == 2){
             $schedule = new TeacherFactory($request->user);
+        }
+        $data= [];
+        try{
+            $data = $schedule->getSchedule();
+            return $this->successResponse($data);
+        }catch(Exception $e){
+            return $this->errorResponse($e->getMessage(),500);
         }
 
     }

@@ -10,7 +10,6 @@ class TeacherFactory extends ScheduleFactory
 {
     public function getSchedule()
     {
-        try{
             $teacher = Teacher::find($this->user)->only('first_name', 'last_name','birthdate','gender','major_id','course_id');
             $teacher['birthdate'] = date('d/m/Y', strtotime($teacher['birthdate']));
             $teacher['major'] = Major::find($teacher['major_id'])->name;
@@ -30,10 +29,7 @@ class TeacherFactory extends ScheduleFactory
                     }
                 }
             }
-            return $this->successResponse([$arr,$teacherinfo]);
-        }catch(\Exception $e){
-            return $this->errorResponse($e->getMessage(),500);
-        }
+            return [$arr,$teacherinfo];
     }
 
 }

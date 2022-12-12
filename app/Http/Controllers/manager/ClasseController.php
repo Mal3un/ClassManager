@@ -411,8 +411,11 @@ class ClasseController extends Controller
      * @param  \App\Models\Classe  $classe
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Classe $classe)
+    public function destroy($id)
     {
-        //
+        $classe = $this->model->findOrFail($id);
+        $classe->delete();
+        return back();
     }
+
 }
